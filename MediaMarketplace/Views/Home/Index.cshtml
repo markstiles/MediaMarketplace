@@ -1,0 +1,30 @@
+﻿@model MediaMarketplace.Models.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="content-container indexing">
+    <h2>Indexing</h2>
+    <div class="site-section">
+        <form class="form" method="post" action="/Indexing/Start" status="/Indexing/GetJobStatus" empty="/Indexing/EmptyIndex">
+            <fieldset>
+                <div class="form-row">
+                    <label for="crawler">Choose Crawler</label>
+                    <select id="crawler" class="crawler">
+                        @foreach (var crawler in Model.Crawlers)
+                        {
+                            <option value="@crawler.Id">@crawler.CrawlerName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-row button-row">
+                    <button class="submit scButton">Start Indexing</button>
+                    <button class="empty-submit scButton">Empty Index</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="job-messages"></div>
+        <div class="empty-success">Emptying the index succeeded.</div>
+        <div class="empty-failure">Emptying the index failed.</div>
+    </div>
+</div>

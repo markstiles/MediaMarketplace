@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Media Marketplace</title>
+    <link href="/assets/css/site.css?x=@(new System.Random().Next())" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Media Marketplace</h1>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li>Home
+                    <ul>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                    </ul>
+                </li>
+                <li>Account
+                    <ul>
+                        <li>@Html.ActionLink("Activity Summary", "ActivitySummary", "Account")</li>
+                        <li>@Html.ActionLink("Add Payment Info", "AddPaymentInfo", "Account")</li>
+                        <li>@Html.ActionLink("Register or Login", "RegisterLogin", "Account")</li>
+                        <li>@Html.ActionLink("Update Account Info", "UpdateAccountInfo", "Account")</li>
+
+                    </ul>
+                </li>
+                <li>Copyrights
+                    <ul>
+                        <li>@Html.ActionLink("Add Copyright", "Add", "Copyright")</li>
+                        <li>@Html.ActionLink("Buy Copyright", "Buy", "Copyright")</li>
+                        <li>@Html.ActionLink("Sell Copyright", "Sell", "Copyright")</li>
+                        <li>@Html.ActionLink("Buy License", "BuyLicense", "Copyright")</li>
+                        <li>@Html.ActionLink("Add License", "AddLicense", "Copyright")</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="content">
+        <h1>@ViewBag.Title</h1>
+        @RenderBody()
+        @Html.Partial("/Views/Shared/_ProgressIndicator.cshtml")
+    </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/assets/js/global.js"></script>
+    <script src="~/assets/js/indexing.js"></script>
+    <script src="~/assets/js/search.js"></script>
+    <script src="~/assets/js/config.js"></script>
+</body>
+</html>

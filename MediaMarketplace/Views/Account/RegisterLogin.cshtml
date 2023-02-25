@@ -1,0 +1,145 @@
+﻿@model MediaMarketplace.Models.ViewModels.ConfigurationViewModel
+@{
+    ViewBag.Title = "Register or Login";
+}
+
+<div class="content-container configurations">
+    <h2>Create a Solr Connection</h2>
+    <div class="site-section solr-config">
+        <form class="form" method="post" action="/Configuration/CreateSolrConfiguration" test="/Configuration/TestSolrConfiguration">
+            <fieldset>
+                <div class="form-row">
+                    <label for="solr-url">Solr Url</label>
+                    <input type="text" id="solr-url" class="solr-url" />
+                </div>
+                <div class="form-row">
+                    <label for="solr-core">Solr Core</label>
+                    <input type="text" id="solr-core" class="solr-core" />
+                </div>
+                <div class="form-row button-row">
+                    <button class="solr-test scButton">Test Connection</button>
+                    <button class="solr-submit scButton">Save Connection</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="test-success">
+            The Solr connection was tested successfully!
+        </div>
+        <div class="test-failure">
+            The Solr connection test failed.
+        </div>
+        <div class="submit-success">
+            The Solr connection was saved successfully!
+        </div>
+        <div class="submit-failure">
+            The Solr connection failed to save.
+        </div>
+    </div>
+    <h2>Create an Azure Connection</h2>
+    <div class="site-section azure-config">
+        <form class="form" method="post" action="/Configuration/CreateAzureConfiguration" test="/Configuration/TestAzureConfiguration">
+            <fieldset>
+                <div class="form-row">
+                    <label for="azure-url">Azure Url</label>
+                    <input type="text" id="azure-url" class="azure-url" />
+                </div>
+                <div class="form-row">
+                    <label for="azure-core">Azure Core</label>
+                    <input type="text" id="azure-core" class="azure-core" />
+                </div>
+                <div class="form-row">
+                    <label for="azure-key">Azure API Key</label>
+                    <input type="text" id="azure-key" class="azure-key" />
+                </div>
+                <div class="form-row button-row">
+                    <button class="azure-test scButton">Test Connection</button>
+                    <button class="azure-submit scButton">Save Connection</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="test-success">
+            The Azure connection was tested successfully!
+        </div>
+        <div class="test-failure">
+            The Azure connection test failed.
+        </div>
+        <div class="submit-success">
+            The Azure connection was saved successfully!
+        </div>
+        <div class="submit-failure">
+            The Azure connection failed to save.
+        </div>
+    </div>
+    <h2>Add Sites</h2>
+    <div class="site-section site-config">
+        <form class="form" method="post" action="/Configuration/CreateSiteConfiguration">
+            <fieldset>
+                <div class="form-row">
+                    <label for="site-url">Site Url</label>
+                    <input type="text" id="site-url" class="site-url" />
+                </div>
+                <div class="form-row">
+                    <label for="parser">Parser</label>
+                    <select type="text" id="parser" class="parser">
+                        <option value="Default">Default</option>
+                    </select>
+                </div>
+                <div class="form-row button-row">
+                    <button class="site-submit scButton">Save Site</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="submit-success">
+            The Site was saved successfully!
+        </div>
+        <div class="submit-failure">
+            The Site failed to save.
+        </div>
+    </div>
+    <h2>Create a Crawler</h2>
+    <div class="site-section crawler-config">
+        <form class="form" method="post" action="/Configuration/CreateCrawlingConfiguration">
+            <fieldset>
+                <div class="form-row">
+                    <label for="crawler-name">Crawler Name</label>
+                    <input type="text" id="crawler-name" class="crawler-name" />
+                </div>
+                <div class="form-row">
+                    <label for="connection">Connection</label>
+                    <select id="connection" class="connection">
+                        @foreach (var sc in Model.SolrConnections)
+                        {
+                            <option value="solr::@sc.Id">@sc.Url/@sc.Core</option>
+                        }
+                        @foreach (var sc in Model.AzureConnections)
+                        {
+                            <option value="azure::@sc.Id">@sc.Url/@sc.Core</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="site-list">Sites to Crawl</label>
+                    <div class="sites">
+                        @for (var i = 0; i < Model.Sites.Count; i++)
+                        {
+                            var site = Model.Sites[i];
+                            <div class="form-group">
+                                <input type="checkbox" id="site-@i" value="@site.Id" />
+                                <label for="site-@i">@site.Url</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="form-row button-row">
+                    <button class="crawler-submit scButton">Save Crawler</button>
+                </div>
+            </fieldset>
+        </form>
+        <div class="submit-success">
+            The crawler was saved successfully!
+        </div>
+        <div class="submit-failure">
+            The crawler failed to save.
+        </div>
+    </div>
+</div>
