@@ -8,19 +8,19 @@
 </head>
 <body>
     <header>
-        <div class="site-name">Media Marketplace</div>
+        <div class="site-name">Digital Media Marketplace</div>
         <div class="navbar">
-            <ul>
+            <ul class="topitems">
                 <li>
                     Home
-                    <ul>
+                    <ul class="subitems">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
                     </ul>
                 </li>
                 <li>
                     Account
-                    <ul>
+                    <ul class="subitems">
                         <li>@Html.ActionLink("Activity Summary", "ActivitySummary", "Account")</li>
                         <li>@Html.ActionLink("Add Payment Info", "AddPaymentInfo", "Account")</li>
                         <li>@Html.ActionLink("Register or Login", "RegisterLogin", "Account")</li>
@@ -30,7 +30,7 @@
                 </li>
                 <li>
                     Copyrights
-                    <ul>
+                    <ul class="subitems">
                         <li>@Html.ActionLink("Add Copyright", "AddCopyright", "Copyright")</li>
                         <li>@Html.ActionLink("Buy Copyright", "BuyCopyright", "Copyright")</li>
                         <li>@Html.ActionLink("Sell Copyright", "SellCopyright", "Copyright")</li>
@@ -50,7 +50,9 @@
         <p>&copy; @DateTime.Now.Year</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--
     <script src="~/assets/js/global.js"></script>
     <script src="~/assets/js/config.js"></script>
+        -->
 </body>
 </html>

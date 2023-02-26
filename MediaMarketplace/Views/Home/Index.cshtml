@@ -1,29 +1,29 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "";
 }
 
-<div class="content-container indexing">
-    <h2>Indexing</h2>
+<div class="content-container home">
+    <h2>Latest News in Intellectual Property Rights</h2>
     <div class="site-section">
-        <form class="form" method="post" action="/Indexing/Start" status="/Indexing/GetJobStatus" empty="/Indexing/EmptyIndex">
-            <fieldset>
-                <div class="form-row">
-                    <label for="crawler">Choose Crawler</label>
-                    <select id="crawler" class="crawler">
-                        @foreach (var crawler in Model.Crawlers)
-                        {
-                            <option value="@crawler.Id">@crawler.CrawlerName</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-row button-row">
-                    <button class="submit scButton">Start Indexing</button>
-                    <button class="empty-submit scButton">Empty Index</button>
-                </div>
-            </fieldset>
-        </form>
-        <div class="job-messages"></div>
-        <div class="empty-success">Emptying the index succeeded.</div>
-        <div class="empty-failure">Emptying the index failed.</div>
+        <div class="news-item">
+            <div class="title">AI-Created Images Lose U.S. Copyrights in Test for New Technology</div>
+            <div class="date">Reuters Feb. 22, 2023</div>
+            <div class="image"><img src="~/assets/img/home-article-1.jfif" /></div>
+        </div>
+        <div class="news-item">
+            <div class="title">Meta Loses Bid to Toss $175 Million Verdict in Streaming Patent Case</div>
+            <div class="date">Reuters Feb. 22, 2023</div>
+            <div class="image"><img src="~/assets/img/home-article-2.jfif" /></div>
+        </div>
+        <div class="news-item">
+            <div class="title">Canada Moves to Restrict Research Funding to Protect Intellectual Property</div>
+            <div class="date">Reuters Feb. 14, 2023</div>
+            <div class="image"><img src="~/assets/img/home-article-3.jfif" /></div>
+        </div>
+        <div class="news-item">
+            <div class="title">AFL-CIO Wants Bigger Say in U.S. Digital Trade Deals for Workers</div>
+            <div class="date">Reuters Feb. 7, 2023</div>
+            <div class="image"><img src="~/assets/img/home-article-4.jfif" /></div>
+        </div>
     </div>
 </div>
