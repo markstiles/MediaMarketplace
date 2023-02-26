@@ -1,5 +1,5 @@
 ﻿using MediaMarketplace.Models.ViewModels;
-using MediaMarketplace.Services.Configuration;
+using MediaMarketplace.Services.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,32 +10,23 @@ namespace MediaMarketplace.Controllers
 {
     public class HomeController : Controller
     {
-        protected readonly IConfigurationService ConfigurationService;
+        protected readonly IStringService StringService;
 
-        public HomeController(IConfigurationService configurationService)
+        public HomeController(IStringService stringService)
         {
-            ConfigurationService = configurationService;
+            StringService = stringService;
         }
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            var model = new HomeViewModel
-            {
-                Crawlers = ConfigurationService.GetCrawlers()
-            };
-
-            return View(model);
+            return View();
         }
 
         public ActionResult Dashboard()
         {
-            ViewBag.Title = "Home Page";
-
-            var model = new HomeViewModel
+            var model = new DashboardViewModel
             {
-                Crawlers = ConfigurationService.GetCrawlers()
+                
             };
 
             return View(model);

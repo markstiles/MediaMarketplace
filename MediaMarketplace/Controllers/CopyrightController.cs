@@ -1,17 +1,7 @@
-﻿using Azure;
-using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
-using MediaMarketplace.Factories;
-using MediaMarketplace.Models;
+﻿using MediaMarketplace.Models;
+using MediaMarketplace.Models.FormModels;
 using MediaMarketplace.Models.FormModels.Attributes;
-using MediaMarketplace.Services.Azure.Models;
-using MediaMarketplace.Services.Configuration;
-using MediaMarketplace.Services.Crawling;
-using MediaMarketplace.Services.Indexing;
-using MediaMarketplace.Services.Jobs;
-using MediaMarketplace.Services.Jobs.Models;
-using MediaMarketplace.Services.Solr;
-using MediaMarketplace.Services.Solr.Models;
+using MediaMarketplace.Models.ViewModels;
 using MediaMarketplace.Services.System;
 using System;
 using System.Collections.Generic;
@@ -24,67 +14,47 @@ namespace MediaMarketplace.Controllers
     {
         #region Constructor 
 
-        protected readonly IConfigurationService ConfigurationService;
-        protected readonly ISolrApiService SolrApiService;
-        protected readonly IAzureApiService AzureApiService;
-        protected readonly ICrawlingService CrawlingService;
         protected readonly IStringService StringService;
-        protected readonly IJobService JobService;
-        protected readonly ISiteParserFactory SiteCrawlerFactory;
-
+        
         public CopyrightController(
-            IConfigurationService configurationService, 
-            ISolrApiService solrApiService,
-            IAzureApiService azureApiService,
-            ICrawlingService crawlingService,
-            IStringService stringService,
-            IJobService jobService,
-            ISiteParserFactory siteCrawlerFactory)
+            IStringService stringService)
         {
-            ConfigurationService = configurationService;
-            SolrApiService = solrApiService;
-            AzureApiService = azureApiService;
-            CrawlingService = crawlingService;
             StringService = stringService;
-            JobService = jobService;
-            SiteCrawlerFactory = siteCrawlerFactory;
         }
 
         #endregion
 
         #region View Methods
 
-        public ActionResult Add()
+        public ActionResult AddCopyright()
         {
-            var model = new object();
+            return View();
+        }
+
+        public ActionResult BuyCopyright()
+        {
+            var model = new BuyCopyrightViewModel();
+
+            return View(model);
+        }
+
+        public ActionResult SellCopyright()
+        {
+            var model = new SellCopyrightViewModel();
 
             return View(model);
         }
 
         public ActionResult AddLicense()
         {
-            var model = new object();
-
-            return View(model);
-        }
-
-        public ActionResult Buy()
-        {
-            var model = new object();
+            var model = new AddLicenseViewModel();
 
             return View(model);
         }
 
         public ActionResult BuyLicense()
         {
-            var model = new object();
-
-            return View(model);
-        }
-
-        public ActionResult Sell()
-        {
-            var model = new object();
+            var model = new BuyLicenseViewModel();
 
             return View(model);
         }
@@ -95,14 +65,11 @@ namespace MediaMarketplace.Controllers
 
         [HttpPost]
         [ValidateForm]
-        public ActionResult Start(Guid CrawlerId)
+        public ActionResult AddCopyrightSubmit(AddCopyrightFormModel form)
         {
-            var handleName = JobService.StartJob(CrawlerId, ProcessConfiguration);
-            
-            var result = new TransactionResult<object>
+            var result = new TransactionResult
             {
                 Succeeded = true,
-                ReturnValue = handleName,
                 ErrorMessage = string.Empty
             };
 
@@ -110,146 +77,57 @@ namespace MediaMarketplace.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetJobStatus(string handleName, DateTime lastDateReceived)
+        [ValidateForm]
+        public ActionResult BuyCopyrightSubmit(BuyCopyrightFormModel form)
         {
-            var status = JobService.GetJobStatus(handleName, lastDateReceived);
+            var result = new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
 
-            return Json(new { JobStatus = status });
+            return Json(result);
         }
 
         [HttpPost]
-        public ActionResult EmptyIndex(Guid CrawlerId)
+        [ValidateForm]
+        public ActionResult SellCopyrightSubmit(SellCopyrightFormModel form)
         {
-            var crawler = ConfigurationService.GetCrawler(CrawlerId);
-            
-            if(crawler.Type == "solr")
+            var result = new TransactionResult
             {
-                var solr = ConfigurationService.GetSolrConnection(crawler.Connection);
-                var response = SolrApiService.DeleteAllDocuments(solr.Url, solr.Core);
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
 
-                var result = new TransactionResult<SolrUpdateResponseApiModel>
-                {
-                    Succeeded = true,
-                    ReturnValue = response,
-                    ErrorMessage = string.Empty
-                };
+            return Json(result);
+        }
 
-                return Json(result);
-            }
-            else if (crawler.Type == "azure")
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult AddLicenseSubmit(SellLicenseFormModel form)
+        {
+            var result = new TransactionResult
             {
-                var azure = ConfigurationService.GetAzureConnection(crawler.Connection);
-                var response = AzureApiService.DeleteAllDocuments(azure.Url, azure.Core, azure.ApiKey);
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
 
-                var result = new TransactionResult<Response<IndexDocumentsResult>>
-                {
-                    Succeeded = true,
-                    ReturnValue = response,
-                    ErrorMessage = string.Empty
-                };
+            return Json(result);
+        }
 
-                return Json(result);
-            }
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult BuyLicenseSubmit(BuyLicenseFormModel form)
+        {
+            var result = new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
 
-            return Json(null);
+            return Json(result);
         }
 
         #endregion
-
-        public void ProcessConfiguration(Guid crawlerId, MessageList messages)
-        {
-            var crawler = ConfigurationService.GetCrawler(crawlerId);
-            var siteList = crawler.Sites.Select(a => ConfigurationService.GetSite(a)).ToList();
-
-            var now = DateTime.Now;
-            var updatedDate = now.ToString("yyyy-MM-ddTHH:mm:ssZ");
-
-            messages.Add($"Found {siteList.Count} sites to crawl and index");
-
-            var isIndexed = new Dictionary<string, Uri>();
-            foreach (var site in siteList)
-            {
-                var parser = SiteCrawlerFactory.Create(site.Parser);
-                
-                messages.Add($"Starting: {site.Url}");
-                var startUri = new Uri($"{site.Url}/");
-                var toIndex = new Dictionary<string, Uri>
-                {
-                    { StringService.GetValidKey(startUri), startUri }
-                };
-
-                while (toIndex.Count > 0)
-                {
-                    var firstEntry = toIndex.First();
-                    var currentUri = firstEntry.Value;
-
-                    //update this page as crawled
-                    isIndexed.Add(firstEntry.Key, currentUri);
-                    toIndex.Remove(firstEntry.Key);
-
-                    //query page for content
-                    var html = CrawlingService.GetHtml(currentUri);
-
-                    //gather all the links and determine what has been crawled or not
-                    var validLinks = CrawlingService.GetValidLinks(html, currentUri, parser.GetAllowedPageExtensions());
-                    foreach (var uri in validLinks)
-                    {
-                        var validKey = StringService.GetValidKey(uri);
-                        if (toIndex.ContainsKey(validKey) || isIndexed.ContainsKey(validKey))
-                            continue;
-
-                        toIndex.Add(validKey, uri);
-                    }
-
-                    //TODO batch update items so there aren't so many calls
-                    //index item
-                    var title = parser.GetTitle(html);
-                    var content = parser.GetContent(html);
-
-                    if (crawler.Type == "solr")
-                    {
-                        var model = new SolrDocumentApiModel
-                        {
-                            id = StringService.GetValidKey(currentUri),
-                            title = title,
-                            content = content,
-                            url = currentUri.AbsoluteUri,
-                            updated = updatedDate
-                        };
-                        var solrConfig = ConfigurationService.GetSolrConnection(crawler.Connection);
-                        SolrApiService.AddDocuments(solrConfig.Url, solrConfig.Core, new List<SolrDocumentApiModel> { model });
-                    }
-                    else if (crawler.Type == "azure")
-                    {
-                        var model = new AzureDocumentApiModel
-                        {
-                            id = StringService.GetValidKey(currentUri),
-                            Title = title,
-                            Content = content,
-                            Url = currentUri.AbsoluteUri,
-                            Updated = now
-                        };
-                        var azureConfig = ConfigurationService.GetAzureConnection(crawler.Connection);
-                        AzureApiService.AddDocuments(azureConfig.Url, azureConfig.Core, azureConfig.ApiKey, new List<AzureDocumentApiModel> { model });
-                    }
-
-                    messages.Add($"Found: {(toIndex.Count + isIndexed.Count)} - Crawled: {isIndexed.Count} - Remaining - {toIndex.Count}");
-                }
-
-                messages.Add($"Finished: {site.Url}");
-            }
-
-            //remove anything from solr that wasn't updated
-            if (crawler.Type == "solr")
-            {
-                var solrConfig = ConfigurationService.GetSolrConnection(crawler.Connection);
-                SolrApiService.DeleteDocumentsByQuery(solrConfig.Url, solrConfig.Core, $"-updated:{updatedDate}");
-            }
-            else if (crawler.Type == "azure")
-            {
-                var azureConfig = ConfigurationService.GetAzureConnection(crawler.Connection);
-                AzureApiService.DeleteDocumentsByQuery(azureConfig.Url, azureConfig.Core, azureConfig.ApiKey, $"Updated lt {updatedDate}");
-            }
-        }
     }
 }
