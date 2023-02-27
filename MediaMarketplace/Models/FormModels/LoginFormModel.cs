@@ -9,6 +9,9 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class LoginFormModel
     {
-        //[Required(ErrorMessage = ConfigMessages.AzureUrlRequired)]        
+        [Required(ErrorMessage = AccountMessages.EmailRequired)]
+        public string Email { get; set; }
+        [Required(ErrorMessage = AccountMessages.PasswordRequired)]
+        public string Password { get; set; }
     }
 }

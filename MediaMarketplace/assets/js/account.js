@@ -3,48 +3,45 @@
 jQuery(document).ready(function ()
 {
     //site
-    var siteConfig = ".site-config";
-    var siteConfigForm = siteConfig + " .form";
-    var siteConfigFormSubmit = siteConfigForm + " .site-submit";
-    var siteSubmitSuccess = siteConfig + " .submit-success";
-    var siteSubmitFailure = siteConfig + " .submit-failure";
+    var login = ".login";
+    var loginForm = login + " .form";
+    var loginFormSubmit = loginForm + " .submit";
+    var loginSubmitFailure = login + " .submit-failure";
 
-    //Solr
+    console.log(jQuery(loginFormSubmit));
 
-    jQuery(solrConfigFormSubmit).click(function (e)
+    //Login
+    jQuery(loginFormSubmit).click(function (e)
     {
         e.preventDefault();
 
-        ResetConfigForms();
-        CreateSolrConfig();
+        ResetForms();
+        LoginUser();
     });
 
-    function CreateSolrConfig()
+    function LoginUser()
     {
-        var solrUrlValue = jQuery(solrConfigForm + " .solr-url").val();
-        var solrCoreValue = jQuery(solrConfigForm + " .solr-core").val();
+        var emailValue = jQuery(loginForm + " .email").val();
+        var passwordValue = jQuery(loginForm + " .password").val();
 
         jQuery(progressIndicator).show();
         
         jQuery.post(
-            jQuery(solrConfigForm).attr("action"),
+            jQuery(loginForm).attr("action"),
             {
-                SolrUrl: solrUrlValue,
-                SolrCore: solrCoreValue
+                Email: emailValue,
+                Password: passwordValue
             }
         ).done(function (r)
         {
-            jQuery(progressIndicator).hide();
-           
             if (r.Succeeded)
             {
-                jQuery(solrConfigForm + " .solr-url").val("");
-                jQuery(solrConfigForm + " .solr-core").val("");
-                jQuery(solrSubmitSuccess).show();
+                window.location.replace(r.RedirectUrl);
             }
             else
             {
-                jQuery(solrSubmitFailure).show();
+                jQuery(progressIndicator).hide();
+                jQuery(loginSubmitFailure).show();
             }
         });
     }

@@ -11,7 +11,7 @@
         <form class="form" method="post" action="/Copyright/BuyCopyrightSubmit">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "buy-copyright-submit", ButtonText = "Purchase Copyright" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Purchase Copyright" })
             </fieldset>
         </form>
         <div class="submit-results">

@@ -23,6 +23,7 @@ namespace MediaMarketplace
             services.AddTransient<ICacheService, CacheService>();
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<IStringService, StringService>();
+            services.AddTransient<IUserSessionService, UserSessionService>();
         }
     }
 }

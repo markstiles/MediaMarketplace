@@ -19,7 +19,7 @@
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormFile.cshtml", new FormFileViewModel { CssClass = "file-upload", LabelText = "Upload File" })
                 @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "file-type", LabelText = "File Type", ListItems = fileTypes })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "add-copyright-submit", ButtonText = "Add Copyright" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Add Copyright" })
             </fieldset>
         </form>
         <div class="submit-results">

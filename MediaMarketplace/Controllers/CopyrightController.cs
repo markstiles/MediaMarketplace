@@ -16,26 +16,28 @@ namespace MediaMarketplace.Controllers
     {
         #region Constructor 
 
-        protected readonly IStringService StringService;
-        
-        public CopyrightController(
-            IStringService stringService)
+        protected readonly IUserSessionService UserSession;
+
+        public CopyrightController(IUserSessionService userSession)
         {
-            StringService = stringService;
+            UserSession = userSession;
+            ViewData["LayoutViewModel"] = new LayoutViewModel(UserSession);
         }
 
         #endregion
 
         #region View Methods
 
+        [CheckLogin]
         public ActionResult AddCopyright()
         {
             return View();
         }
 
+        [CheckLogin]
         public ActionResult BuyCopyright()
         {
-            //fill out with all copyright files to buy
+            //TODO fill out with all copyright files to buy
             var model = new BuyCopyrightViewModel
             {
                 CopyrightFiles = new List<ListItem>
@@ -48,9 +50,10 @@ namespace MediaMarketplace.Controllers
             return View(model);
         }
 
+        [CheckLogin]
         public ActionResult SellCopyright()
         {
-            //fill out with all copyrights for this user
+            //TODO fill out with all copyrights for this user
             var model = new SellCopyrightViewModel
             {
                 CopyrightFiles = new List<ListItem>
@@ -63,9 +66,10 @@ namespace MediaMarketplace.Controllers
             return View(model);
         }
 
+        [CheckLogin]
         public ActionResult AddLicense()
         {
-            //fill out with all copyrights for this user
+            //TODO fill out with all copyrights for this user
             var model = new AddLicenseViewModel
             {
                 CopyrightFiles = new List<ListItem>
@@ -78,9 +82,10 @@ namespace MediaMarketplace.Controllers
             return View(model);
         }
 
+        [CheckLogin]
         public ActionResult BuyLicense()
         {
-            //fill out with all copyright files to buy
+            //TODO fill out with all copyright files to buy
             var model = new BuyLicenseViewModel
             {
                 CopyrightFiles = new List<ListItem>

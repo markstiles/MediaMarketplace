@@ -11,7 +11,7 @@
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "bank-account", LabelText = "Bank Account" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "routing-number", LabelText = "Routing Number" })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "add-pay-submit", ButtonText = "Add Payment Information" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Add Payment Information" })
             </fieldset>
         </form>
         <div class="submit-results">

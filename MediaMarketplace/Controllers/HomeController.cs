@@ -1,4 +1,5 @@
-﻿using MediaMarketplace.Models.ViewModels;
+﻿using MediaMarketplace.Models.FormModels.Attributes;
+using MediaMarketplace.Models.ViewModels;
 using MediaMarketplace.Services.System;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,12 @@ namespace MediaMarketplace.Controllers
 {
     public class HomeController : Controller
     {
-        protected readonly IStringService StringService;
-
-        public HomeController(IStringService stringService)
+        protected readonly IUserSessionService UserSession;
+        
+        public HomeController(IUserSessionService userSession)
         {
-            StringService = stringService;
+            UserSession = userSession;
+            ViewData["LayoutViewModel"] = new LayoutViewModel(UserSession);            
         }
 
         public ActionResult Index()
@@ -22,6 +24,7 @@ namespace MediaMarketplace.Controllers
             return View();
         }
 
+        [CheckLogin]
         public ActionResult Dashboard()
         {
             var model = new DashboardViewModel

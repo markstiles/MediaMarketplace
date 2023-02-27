@@ -12,7 +12,7 @@
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "amount", LabelText = "Amount" })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "sell-copyright-submit", ButtonText = "Place Copyright for Sale" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Place Copyright for Sale" })
             </fieldset>
         </form>
         <div class="submit-results">

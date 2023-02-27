@@ -233,6 +233,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CopyrightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\EntityModels\UserEntityModel.cs" />
+    <Compile Include="Models\FormModels\Attributes\CheckLogin.cs" />
     <Compile Include="Models\FormModels\BuyLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\SellLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\SellCopyrightFormModel.cs" />
@@ -244,7 +246,7 @@
     <Compile Include="Models\FormModels\PaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\LoginFormModel.cs" />
     <Compile Include="Models\FormModels\RegisterFormModel.cs" />
-    <Compile Include="Models\FormModels\ValidationMessages\ConfigMessages.cs" />
+    <Compile Include="Models\FormModels\ValidationMessages\AccountMessages.cs" />
     <Compile Include="Models\FormModels\Validators\ValidGuid.cs" />
     <Compile Include="Models\FormModels\Validators\ValidInt.cs" />
     <Compile Include="Models\FormModels\Validators\ValidLong.cs" />
@@ -253,6 +255,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\TransactionResult.cs" />
+    <Compile Include="Models\ViewModels\LayoutViewModel.cs" />
     <Compile Include="Models\ViewModels\FormFileViewModel.cs" />
     <Compile Include="Models\ViewModels\FormSubmitViewModel.cs" />
     <Compile Include="Models\ViewModels\FormSelectViewModel.cs" />
@@ -262,7 +265,6 @@
     <Compile Include="Models\ViewModels\AddLicenseViewModel.cs" />
     <Compile Include="Models\ViewModels\SellCopyrightViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyCopyrightViewModel.cs" />
-    <Compile Include="Models\ViewModels\ActivitySummaryViewModel.cs" />
     <Compile Include="Models\ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="Models\ViewModels\AccountInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -270,6 +272,7 @@
     <Compile Include="Services\System\FileService.cs" />
     <Compile Include="Services\System\StringService.cs" />
     <Compile Include="Services\System\LogService.cs" />
+    <Compile Include="Services\User\UserSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\img\home-article-1.jfif" />
@@ -281,7 +284,6 @@
     <Content Include="assets\js\copyright.js" />
     <Content Include="Global.asax" />
     <Content Include="assets\css\site.css" />
-    <Content Include="Views\Account\ActivitySummary.cshtml" />
     <Content Include="Views\Account\AddPaymentInfo.cshtml" />
     <Content Include="Views\Account\RegisterLogin.cshtml" />
     <Content Include="Views\Account\UpdateAccountInfo.cshtml" />
@@ -309,6 +311,7 @@
     <Content Include="Views\Shared\_FormSubmit.cshtml" />
     <Content Include="Views\Shared\_FormSelect.cshtml" />
     <Content Include="Views\Shared\_FormFile.cshtml" />
+    <Content Include="Views\Account\_ProfileNav.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
