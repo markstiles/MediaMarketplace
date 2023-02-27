@@ -1,36 +1,27 @@
-﻿@model MediaMarketplace.Models.ViewModels.BuyLicenseViewModel
+﻿@using MediaMarketplace.Models.ViewModels
+@using System.Web.UI.WebControls
+@model BuyLicenseViewModel
 @{
     ViewBag.Title = "Buy License";
 }
 
-<div class="content-container searching">
-    <h2>Search</h2>
-    <div class="site-section">
-        <form class="search-form" method="post" action="/Search/Search">
+<div class="content-container buy-license-container">
+    <h2>Purchase a License</h2>
+    <div class="site-section buy-license">
+        <form class="form" method="post" action="/Copyright/BuyLicenseSubmit">
             <fieldset>
-                <div class="form-row">
-                    <label for="connection">Connections</label>
-                    <select id="connection" class="connection">
-                        @foreach (var sc in Model.SolrConnections)
-                        {
-                            <option value="@sc.Id">@sc.Url/@sc.Core</option>
-                        }
-                        @foreach (var sc in Model.AzureConnections)
-                        {
-                            <option value="@sc.Id">@sc.Url/@sc.Core</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label for="query">Search Query</label>
-                    <input type="text" id="query" class="query" />
-                </div>
-                <div class="form-row button-row">
-                    <button class="submit scButton">Search Index</button>
-                </div>
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-license", LabelText = "License" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "buy-license-submit", ButtonText = "Purchase License" })
             </fieldset>
         </form>
-        <div class="search-failure">The search failed to produce results.</div>
-        <div class="search-results"></div>
+        <div class="submit-results">
+            <div class="success buy-license-success">
+                You successfully purchasing a license.
+            </div>
+            <div class="failure buy-license-failure">
+                There was an issue purchasing a license.
+            </div>
+        </div>
     </div>
 </div>

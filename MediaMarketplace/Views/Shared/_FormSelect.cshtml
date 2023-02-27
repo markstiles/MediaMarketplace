@@ -1,0 +1,14 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@model FormSelectViewModel
+<div class="form-row">
+    <label for="@Model.CssClass">@Model.LabelText</label>
+    <select id="@Model.CssClass" class="@Model.CssClass">
+        @if (Model.ListItems != null)
+        {
+            foreach (var li in Model.ListItems)
+            {
+                <option value="@li.Value">@li.Text</option>
+            }
+        }
+    </select>
+</div>

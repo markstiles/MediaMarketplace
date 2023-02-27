@@ -5,8 +5,10 @@ using MediaMarketplace.Models.ViewModels;
 using MediaMarketplace.Services.System;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace MediaMarketplace.Controllers
 {
@@ -33,28 +35,60 @@ namespace MediaMarketplace.Controllers
 
         public ActionResult BuyCopyright()
         {
-            var model = new BuyCopyrightViewModel();
+            //fill out with all copyright files to buy
+            var model = new BuyCopyrightViewModel
+            {
+                CopyrightFiles = new List<ListItem>
+                {
+                    new ListItem { Text="Fix Me", Value="Fix Me" },
+                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
+                }
+            };
 
             return View(model);
         }
 
         public ActionResult SellCopyright()
         {
-            var model = new SellCopyrightViewModel();
+            //fill out with all copyrights for this user
+            var model = new SellCopyrightViewModel
+            {
+                CopyrightFiles = new List<ListItem>
+                {
+                    new ListItem { Text="Fix Me", Value="Fix Me" },
+                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
+                }
+            };
 
             return View(model);
         }
 
         public ActionResult AddLicense()
         {
-            var model = new AddLicenseViewModel();
+            //fill out with all copyrights for this user
+            var model = new AddLicenseViewModel
+            {
+                CopyrightFiles = new List<ListItem>
+                {
+                    new ListItem { Text="Fix Me", Value="Fix Me" },
+                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
+                }
+            };
 
             return View(model);
         }
 
         public ActionResult BuyLicense()
         {
-            var model = new BuyLicenseViewModel();
+            //fill out with all copyright files to buy
+            var model = new BuyLicenseViewModel
+            {
+                CopyrightFiles = new List<ListItem>
+                {
+                    new ListItem { Text="Fix Me", Value="Fix Me" },
+                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
+                }
+            };
 
             return View(model);
         }
@@ -67,6 +101,23 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult AddCopyrightSubmit(AddCopyrightFormModel form)
         {
+            try
+            {
+                if (form.File.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(form.File.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    form.File.SaveAs(_path);
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+                return View();
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                return View();
+            }
+
             var result = new TransactionResult
             {
                 Succeeded = true,

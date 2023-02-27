@@ -6,8 +6,10 @@ using System.Web.UI.WebControls;
 
 namespace MediaMarketplace.Models.ViewModels
 {
-    public class BuyLicenseViewModel
+    public class FormSelectViewModel
     {
-        public List<ListItem> CopyrightFiles { get; set; }
+        public string CssClass { get; set; }
+        public string LabelText { get; set; }
+        public List<ListItem> ListItems { get; set; }
     }
 }

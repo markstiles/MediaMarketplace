@@ -1,35 +1,34 @@
-﻿@{
+﻿@using MediaMarketplace.Models.ViewModels
+@using System.Web.UI.WebControls
+@{
     ViewBag.Title = "Add Copyright";
+
+    var fileTypes = new List<ListItem>
+    {
+        new ListItem { Text="Image", Value="image" },
+        new ListItem { Text="Video", Value="vide" },
+        new ListItem { Text="Audio", Value="audio" },
+        new ListItem { Text="document", Value="document" }
+    };
 }
 
-<div class="content-container searching">
-    <h2>Search</h2>
-    <div class="site-section">
-        <form class="search-form" method="post" action="/Search/Search">
+<div class="content-container add-copyright-container">
+    <h2>Add Copyrighted Intellectual Property</h2>
+    <div class="site-section add-copyright">
+        <form class="form" method="post" action="/Copyright/AddCopyrightSubmit" enctype="multipart/form-data">
             <fieldset>
-                <div class="form-row">
-                    <label for="connection">Connections</label>
-                    <select id="connection" class="connection">
-                        @foreach (var sc in Model.SolrConnections)
-                        {
-                            <option value="@sc.Id">@sc.Url/@sc.Core</option>
-                        }
-                        @foreach (var sc in Model.AzureConnections)
-                        {
-                            <option value="@sc.Id">@sc.Url/@sc.Core</option>
-                        }
-                    </select>
-                </div>
-                <div class="form-row">
-                    <label for="query">Search Query</label>
-                    <input type="text" id="query" class="query" />
-                </div>
-                <div class="form-row button-row">
-                    <button class="submit scButton">Search Index</button>
-                </div>
+                @Html.Partial("/Views/Shared/_FormFile.cshtml", new FormFileViewModel { CssClass = "file-upload", LabelText = "Upload File" })
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "file-type", LabelText = "File Type", ListItems = fileTypes })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "add-copyright-submit", ButtonText = "Add Copyright" })
             </fieldset>
         </form>
-        <div class="search-failure">The search failed to produce results.</div>
-        <div class="search-results"></div>
+        <div class="submit-results">
+            <div class="success add-copyright-success">
+                You successfully added copyrighted property.
+            </div>
+            <div class="failure add-copyright-failure">
+                There was an issue adding copyrighted property.
+            </div>
+        </div>  
     </div>
 </div>

@@ -9,6 +9,7 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class AddCopyrightFormModel
     {
-        //[Required(ErrorMessage = ConfigMessages.AzureUrlRequired)]        
+        //[Required(ErrorMessage = ConfigMessages.AzureUrlRequired)]
+        public HttpPostedFileBase File { get; set; }
     }
 }

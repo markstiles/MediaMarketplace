@@ -1,0 +1,6 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@model FormFileViewModel
+<div class="form-row">
+    <label for="@Model.CssClass">@Model.LabelText</label>
+    @Html.TextBox("file", "", new { type = "file" })
+</div>

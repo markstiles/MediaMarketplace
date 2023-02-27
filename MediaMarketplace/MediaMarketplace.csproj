@@ -253,6 +253,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\TransactionResult.cs" />
+    <Compile Include="Models\ViewModels\FormFileViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormSubmitViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormSelectViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormTextViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyLicenseViewModel.cs" />
     <Compile Include="Models\ViewModels\AddLicenseViewModel.cs" />
@@ -268,8 +272,13 @@
     <Compile Include="Services\System\LogService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\img\home-article-1.jfif" />
+    <Content Include="assets\img\home-article-2.jfif" />
+    <Content Include="assets\img\home-article-3.jfif" />
+    <Content Include="assets\img\home-article-4.jfif" />
+    <Content Include="assets\js\account.js" />
     <Content Include="assets\js\global.js" />
-    <Content Include="assets\js\config.js" />
+    <Content Include="assets\js\copyright.js" />
     <Content Include="Global.asax" />
     <Content Include="assets\css\site.css" />
     <Content Include="Views\Account\ActivitySummary.cshtml" />
@@ -296,6 +305,10 @@
   <ItemGroup>
     <Content Include="assets\img\spinner.gif" />
     <None Include="packages.config" />
+    <Content Include="Views\Shared\_FormText.cshtml" />
+    <Content Include="Views\Shared\_FormSubmit.cshtml" />
+    <Content Include="Views\Shared\_FormSelect.cshtml" />
+    <Content Include="Views\Shared\_FormFile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

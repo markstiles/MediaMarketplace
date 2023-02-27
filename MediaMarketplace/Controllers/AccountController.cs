@@ -16,13 +16,9 @@ namespace MediaMarketplace.Controllers
     {
         #region Constructor 
 
-        //protected readonly IConfigurationService ConfigurationService;
-        
-        public AccountController(
-            //IConfigurationService configurationService,
-            )
+        public AccountController()
         {
-            //ConfigurationService = configurationService;
+            
         }
 
         #endregion
