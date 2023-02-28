@@ -9,13 +9,18 @@
         <h2>Update Account Information</h2>
         <form class="form" method="post" action="/Account/UpdateAccountInfoSubmit">
             <fieldset>
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "email", LabelText = "Email" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "phone-number", LabelText = "Phone Number" })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "email", LabelText = "Email", 
+                    FieldValue = Model.Profile.user_email })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "phone-number", LabelText = "Phone Number", 
+                    FieldValue = Model.Profile.user_phone_number })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "password", LabelText = "Password" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "password-confirm", LabelText = "Confirm Password" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "first-name", LabelText = "First Name" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "last-name", LabelText = "Last Name" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "business-name", LabelText = "Business Name" })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "first-name", LabelText = "First Name", 
+                    FieldValue = Model.Profile.user_first_name })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "last-name", LabelText = "Last Name", 
+                    FieldValue = Model.Profile.user_last_name })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "business-name", LabelText = "Business Name", 
+                    FieldValue = Model.Profile.user_business_name })
                 @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Update Account" })
             </fieldset>
         </form>

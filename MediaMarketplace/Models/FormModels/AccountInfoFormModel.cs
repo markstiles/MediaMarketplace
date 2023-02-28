@@ -11,11 +11,13 @@ namespace MediaMarketplace.Models.FormModels
     {
         [Required(ErrorMessage = AccountMessages.EmailRequired)] 
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Password { get; set; }
+        public string PasswordConfirm { get; set; }
         [Required(ErrorMessage = AccountMessages.FirstNameRequired)]
         public string FirstName { get; set; }
         [Required(ErrorMessage = AccountMessages.LastNameRequired)]
         public string LastName { get; set; }
-        public string BusinessName { get; set; }
-        public string PhoneNumber { get; set; }
+        public string BusinessName { get; set; }        
     }
 }

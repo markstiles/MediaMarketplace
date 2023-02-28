@@ -40,11 +40,23 @@ namespace MediaMarketplace.Controllers
         }
 
         [CheckLogin]
+        public ActionResult Dashboard()
+        {
+            var model = new DashboardViewModel
+            {
+
+            };
+
+            return View(model);
+        }
+
+        [CheckLogin]
         public ActionResult UpdateAccountInfo()
         {
+            var user = UserSession.GetUser();
             var model = new AccountInfoViewModel
             {
-                
+                Profile = user   
             };
 
             return View(model);
@@ -118,7 +130,7 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult LoginSubmit(LoginFormModel form)
         {
-            var user = DbContext.users.First(a => a.user_email == form.Email);
+            var user = DbContext.users.First(a => a.user_email == form.Email && a.user_password == form.Password);
 
             if (user == null) return Json(new TransactionResult
             {
@@ -132,7 +144,7 @@ namespace MediaMarketplace.Controllers
             {
                 Succeeded = true,
                 ErrorMessage = string.Empty,
-                RedirectUrl = "/Home/Dashboard"
+                RedirectUrl = "/Account/Dashboard"
             };
 
             return Json(result);
@@ -142,6 +154,29 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult UpdateAccountInfoSubmit(AccountInfoFormModel form)
         {
+            var user_id = UserSession.GetUser().user_id;
+            var user = DbContext.users.First(a => a.user_id == user_id);
+            if(user == null) return Json(new TransactionResult
+            {
+                Succeeded = false,
+                ErrorMessage = "user not found"
+            });
+
+            if (form.Password != form.PasswordConfirm) return Json(new TransactionResult
+            {
+                Succeeded = false,
+                ErrorMessage = "The password doesn't match the confirm password"
+            });
+
+            user.user_first_name = form.FirstName;
+            user.user_last_name = form.LastName;
+            user.user_email = form.Email;
+            user.user_business_name = form.BusinessName;
+            if(!string.IsNullOrWhiteSpace(form.Password))
+                user.user_password = form.Password;
+            user.user_phone_number = form.PhoneNumber;
+            DbContext.SaveChanges();
+
             var result = new TransactionResult
             {
                 Succeeded = true,

@@ -1,52 +1,42 @@
 ﻿jQuery.noConflict();
 
 jQuery(document).ready(function ()
-{
-    //solr
-    var solrConfig = ".solr-config";
-    var solrConfigForm = solrConfig + " .form";
-    var solrTestFormSubmit = solrConfigForm + " .solr-test";
-    var solrTestSuccess = solrConfig + " .test-success";
-    var solrTestFailure = solrConfig + " .test-failure";
-    var solrConfigFormSubmit = solrConfigForm + " .solr-submit";
-    var solrSubmitSuccess = solrConfig + " .submit-success";
-    var solrSubmitFailure = solrConfig + " .submit-failure";
+{  
+    //add copyright
+    var addCopyright = ".add-copyright";
+    var addCopyrightForm = addCopyright + " .form";
+    var addCopyrightFormSubmit = addCopyrightForm + " .submit";
+    var addCopyrightSubmitSuccess = addCopyright + " .submit-results .success";
+    var addCopyrightSubmitFailure = addCopyright + " .submit-results .failure";
 
-    //Solr
-    jQuery(solrConfigFormSubmit).click(function (e)
+    jQuery(addCopyrightFormSubmit).click(function (e)
     {
         e.preventDefault();
 
-        ResetConfigForms();
-        CreateSolrConfig();
+        ResetForms();
+        AddCopyright();
     });
 
-    function CreateSolrConfig()
+    function AddCopyright()
     {
-        var solrUrlValue = jQuery(solrConfigForm + " .solr-url").val();
-        var solrCoreValue = jQuery(solrConfigForm + " .solr-core").val();
+        var fileTypeValue = jQuery(addCopyrightForm + " .file-type").val();
 
         jQuery(progressIndicator).show();
-        
+
         jQuery.post(
-            jQuery(solrConfigForm).attr("action"),
+            jQuery(addCopyrightForm).attr("action"),
             {
-                SolrUrl: solrUrlValue,
-                SolrCore: solrCoreValue
+                File: new FormData(jQuery(addCopyrightForm)[0]),
+                FileType: fileTypeValue
             }
-        ).done(function (r)
-        {
+        ).done(function (r) {
             jQuery(progressIndicator).hide();
-           
-            if (r.Succeeded)
-            {
-                jQuery(solrConfigForm + " .solr-url").val("");
-                jQuery(solrConfigForm + " .solr-core").val("");
-                jQuery(solrSubmitSuccess).show();
+
+            if (r.Succeeded) {
+                jQuery(addCopyrightSubmitSuccess).show();
             }
-            else
-            {
-                jQuery(solrSubmitFailure).show();
+            else {
+                jQuery(addCopyrightSubmitFailure).show();
             }
         });
     }

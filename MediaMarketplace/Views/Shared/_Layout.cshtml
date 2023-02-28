@@ -19,24 +19,17 @@
         </div>
         <div class="navbar">
             <ul class="topitems">
-                <li>
-                    Account
-                    <ul class="subitems">
-                        @if (thisModel.IsUserLoggedIn)
-                        {
-                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                @if (thisModel.IsUserLoggedIn)
+                {
+                    <li>
+                        Account
+                        <ul class="subitems">
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Account")</li>
                             <li>@Html.ActionLink("View Payment Info", "ViewPaymentInfo", "Account")</li>
                             <li>@Html.ActionLink("Add Payment Info", "AddPaymentInfo", "Account")</li>
                             <li>@Html.ActionLink("Update Account Info", "UpdateAccountInfo", "Account")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Register or Login", "RegisterLogin", "Account")</li>
-                        }
-                    </ul>
-                </li>
-                @if (thisModel.IsUserLoggedIn)
-                {
+                        </ul>
+                    </li>
                     <li>
                         Copyrights
                         <ul class="subitems">
@@ -50,10 +43,16 @@
                 }
             </ul>
         </div>
-        @if (thisModel.IsUserLoggedIn)
-        {
-            @Html.Partial("/Views/Account/_ProfileNav.cshtml", thisModel.UserName)
-        }
+        <div class="profile-nav">
+            @if (thisModel.IsUserLoggedIn)
+            {
+                <text>Hi, @thisModel.UserName - <a href="/Account/Logout">Logout</a></text>
+            }
+            else
+            {
+                @Html.ActionLink("Register or Login", "RegisterLogin", "Account")
+            }
+        </div>
     </header>
     <div class="content">
         @RenderBody()
@@ -67,6 +66,7 @@
     <script src="~/assets/js/login.js"></script>
     <script src="~/assets/js/register.js"></script>
     <script src="~/assets/js/payinfo.js"></script>
+    <script src="~/assets/js/accountinfo.js"></script>
     <script src="~/assets/js/copyright.js"></script>
 </body>
 </html>

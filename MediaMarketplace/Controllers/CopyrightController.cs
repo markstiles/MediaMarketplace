@@ -113,14 +113,14 @@ namespace MediaMarketplace.Controllers
                     string _FileName = Path.GetFileName(form.File.FileName);
                     string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
                     form.File.SaveAs(_path);
+
+
                 }
-                ViewBag.Message = "File Uploaded Successfully!!";
-                return View();
+                //ViewBag.Message = "File Uploaded Successfully!!";
             }
             catch
             {
-                ViewBag.Message = "File upload failed!!";
-                return View();
+                //ViewBag.Message = "File upload failed!!";
             }
 
             var result = new TransactionResult

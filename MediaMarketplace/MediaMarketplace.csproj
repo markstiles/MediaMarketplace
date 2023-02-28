@@ -288,6 +288,7 @@
     <Compile Include="Models\FormModels\PaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\LoginFormModel.cs" />
     <Compile Include="Models\FormModels\RegisterFormModel.cs" />
+    <Compile Include="Models\FormModels\ValidationMessages\CopyrightMessages.cs" />
     <Compile Include="Models\FormModels\ValidationMessages\AccountMessages.cs" />
     <Compile Include="Models\FormModels\Validators\ValidGuid.cs" />
     <Compile Include="Models\FormModels\Validators\ValidInt.cs" />
@@ -323,6 +324,7 @@
     <Content Include="assets\img\home-article-2.jfif" />
     <Content Include="assets\img\home-article-3.jfif" />
     <Content Include="assets\img\home-article-4.jfif" />
+    <Content Include="assets\js\accountinfo.js" />
     <Content Include="assets\js\payinfo.js" />
     <Content Include="assets\js\register.js" />
     <Content Include="assets\js\login.js" />
@@ -348,7 +350,7 @@
     <Content Include="Views\Copyright\BuyCopyright.cshtml" />
     <Content Include="Views\Copyright\BuyLicense.cshtml" />
     <Content Include="Views\Copyright\SellCopyright.cshtml" />
-    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Account\Dashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -374,7 +376,6 @@
     <Content Include="Views\Shared\_FormSubmit.cshtml" />
     <Content Include="Views\Shared\_FormSelect.cshtml" />
     <Content Include="Views\Shared\_FormFile.cshtml" />
-    <Content Include="Views\Account\_ProfileNav.cshtml" />
     <Content Include="Views\Shared\_FormRadioList.cshtml" />
     <Content Include="Views\Shared\_FormCheckList.cshtml" />
     <Content Include="Views\Account\ViewPaymentInfo.cshtml" />

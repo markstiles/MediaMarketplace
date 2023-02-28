@@ -23,16 +23,5 @@ namespace MediaMarketplace.Controllers
         {
             return View();
         }
-
-        [CheckLogin]
-        public ActionResult Dashboard()
-        {
-            var model = new DashboardViewModel
-            {
-                
-            };
-
-            return View(model);
-        }
     }
 }
