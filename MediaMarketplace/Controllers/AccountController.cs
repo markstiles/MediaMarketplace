@@ -19,10 +19,14 @@ namespace MediaMarketplace.Controllers
         #region Constructor 
 
         protected readonly IUserSessionService UserSession;
+        protected readonly MediaMarketplaceEntities DbContext;
 
-        public AccountController(IUserSessionService userSession)
+        public AccountController(
+            IUserSessionService userSession,
+            MediaMarketplaceEntities dbContext)
         {
             UserSession = userSession;
+            DbContext = dbContext;
             ViewData["LayoutViewModel"] = new LayoutViewModel(UserSession);
         }
 
@@ -49,9 +53,17 @@ namespace MediaMarketplace.Controllers
         [CheckLogin]
         public ActionResult AddPaymentInfo()
         {
+            return View();
+        }
+
+        [CheckLogin]
+        public ActionResult ViewPaymentInfo()
+        {
+            var user = UserSession.GetUser();
+            var paymentInfos = DbContext.payment_informations.Where(a => a.payment_information_user_id == user.user_id).ToList();
             var model = new PaymentInfoViewModel
             {
-                
+                PaymentInfos = paymentInfos
             };
 
             return View(model);
@@ -72,6 +84,27 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult RegisterSubmit(RegisterFormModel form)
         {
+            var user = new user
+            {
+                user_first_name = form.FirstName,
+                user_last_name = form.LastName,
+                user_email = form.Email,
+                user_business_name = form.BusinessName,
+                user_password = form.Password,
+                user_phone_number = form.PhoneNumber
+            };
+            user = DbContext.users.Add(user);
+            DbContext.SaveChanges();
+
+            var payInfo = new payment_informations
+            {
+                payment_information_user_id = user.user_id,
+                payment_information_bank_account = form.BankAccount,
+                payment_information_routing_number = form.RoutingNumber
+            };
+            DbContext.payment_informations.Add(payInfo);
+            DbContext.SaveChanges();
+
             var result = new TransactionResult
             {
                 Succeeded = true,
@@ -85,21 +118,13 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult LoginSubmit(LoginFormModel form)
         {
-            //TODO lookup user and get id
-            //dbcontext.Users.GetUser(form.email)
+            var user = DbContext.users.First(a => a.user_email == form.Email);
 
-            var user = new UserEntityModel
+            if (user == null) return Json(new TransactionResult
             {
-                Id = 1,
-                Email = form.Email,
-                FirstName = "Mike",
-                LastName = "Rafone",
-                BusinessName = "Melodic Music",
-                PhoneNumber = "",
-                Address = "123 Sound System Way",
-                Region = "NY",
-                PostalCode = "12345"
-            };
+                Succeeded = false,
+                ErrorMessage = string.Empty
+            });
 
             UserSession.StoreUser(user);
 
@@ -130,6 +155,54 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult AddPaymentInfoSubmit(PaymentInfoFormModel form)
         {
+            var user = UserSession.GetUser();
+            var payInfo = new payment_informations
+            {
+                payment_information_user_id = user.user_id,
+                payment_information_bank_account = form.BankAccount,
+                payment_information_routing_number = form.RoutingNumber
+            };
+            DbContext.payment_informations.Add(payInfo);
+            DbContext.SaveChanges();
+
+            var result = new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
+
+            return Json(result);
+        }
+        
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult UpdatePaymentInfoSubmit(UpdatePaymentInfoFormModel form)
+        {
+            var user = UserSession.GetUser();
+            var payInfo = DbContext.payment_informations.First(a
+                => a.payment_information_user_id == user.user_id
+                && a.payment_information_id == form.Id);
+            payInfo.payment_information_bank_account = form.BankAccount;
+            payInfo.payment_information_routing_number = form.RoutingNumber;
+            DbContext.SaveChanges();
+
+            var result = new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult DeletePaymentInfoSubmit(DeletePaymentInfoFormModel form)
+        {
+            var payInfo = DbContext.payment_informations.First(a => a.payment_information_id == form.Id);
+            DbContext.payment_informations.Remove(payInfo);
+            DbContext.SaveChanges();
+
             var result = new TransactionResult
             {
                 Succeeded = true,

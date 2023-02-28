@@ -13,7 +13,7 @@ namespace MediaMarketplace.Models.ViewModels
         {
             UserSession = userSession;
             var user = UserSession.GetUser();
-            UserName = user == null ? "" : $"{user.FirstName} {user.LastName}";
+            UserName = user == null ? "" : $"{user.user_first_name} {user.user_last_name}";
         }
 
         public bool IsUserLoggedIn => UserSession.IsLoggedIn();

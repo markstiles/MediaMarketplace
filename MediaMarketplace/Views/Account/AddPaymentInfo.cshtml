@@ -5,8 +5,8 @@
 }
 
 <div class="content-container add-pay-container">
-    <h2>Add Payment Information</h2>
     <div class="site-section add-pay-info">
+        <h2>Add Payment Information</h2>
         <form class="form" method="post" action="/Account/AddPaymentInfoSubmit">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "bank-account", LabelText = "Bank Account" })

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using MediaMarketplace.Controllers;
 using MediaMarketplace.Services.System;
+using MediaMarketplace.Models.EntityModels;
 
 namespace MediaMarketplace
 {
@@ -17,6 +18,9 @@ namespace MediaMarketplace
             services.AddTransient<HomeController>();
             services.AddTransient<AccountController>();
             services.AddTransient<CopyrightController>();
+
+            //database contexts
+            services.AddTransient<MediaMarketplaceEntities>();
 
             //services
             services.AddTransient<ILogService, LogService>();

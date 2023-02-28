@@ -2,15 +2,12 @@
 
 jQuery(document).ready(function ()
 {
-    //site
+    //login
     var login = ".login";
     var loginForm = login + " .form";
     var loginFormSubmit = loginForm + " .submit";
-    var loginSubmitFailure = login + " .submit-failure";
+    var loginSubmitFailure = login + " .submit-results .failure";
 
-    console.log(jQuery(loginFormSubmit));
-
-    //Login
     jQuery(loginFormSubmit).click(function (e)
     {
         e.preventDefault();
@@ -45,4 +42,14 @@ jQuery(document).ready(function ()
             }
         });
     }
+
+    /* get radio list
+     * 
+        var sitesValue = [];
+        jQuery(crawlerConfigForm + " .sites input[type=checkbox]").each(function ()
+        {
+            if (jQuery(this).is(":checked"))
+                sitesValue.push(jQuery(this).val());
+        });
+     * */
 });

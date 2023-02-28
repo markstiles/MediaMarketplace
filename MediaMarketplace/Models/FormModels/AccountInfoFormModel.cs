@@ -17,11 +17,5 @@ namespace MediaMarketplace.Models.FormModels
         public string LastName { get; set; }
         public string BusinessName { get; set; }
         public string PhoneNumber { get; set; }
-        [Required(ErrorMessage = AccountMessages.AddressRequired)]
-        public string Address { get; set; }
-        [Required(ErrorMessage = AccountMessages.RegionRequired)]
-        public string Region { get; set; }
-        [Required(ErrorMessage = AccountMessages.PostalCodeRequired)]
-        public string PostalCode { get; set; }
     }
 }

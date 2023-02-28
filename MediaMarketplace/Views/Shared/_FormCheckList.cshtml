@@ -1,0 +1,18 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@model FormCheckListViewModel
+<div class="form-row">
+    <label for="@Model.CssClass">@Model.LabelText</label>
+    <div id="@Model.CssClass" class="@Model.CssClass">
+        @if (Model.ListItems != null)
+        {
+            for (var i = 0; i < Model.ListItems.Count; i++)
+            {
+                var item = Model.ListItems[i];
+                <div class="form-group">
+                    <input type="radio" id="item-@i" value="@item.Value" />
+                    <label for="item-@i">@item.Text</label>
+                </div>
+            }
+        }
+    </div>
+</div>

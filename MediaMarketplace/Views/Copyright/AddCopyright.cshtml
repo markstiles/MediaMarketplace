@@ -13,8 +13,8 @@
 }
 
 <div class="content-container add-copyright-container">
-    <h2>Add Copyrighted Intellectual Property</h2>
     <div class="site-section add-copyright">
+        <h2>Add Copyrighted Intellectual Property</h2>
         <form class="form" method="post" action="/Copyright/AddCopyrightSubmit" enctype="multipart/form-data">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormFile.cshtml", new FormFileViewModel { CssClass = "file-upload", LabelText = "Upload File" })
@@ -29,6 +29,6 @@
             <div class="failure add-copyright-failure">
                 There was an issue adding copyrighted property.
             </div>
-        </div>  
+        </div>
     </div>
 </div>

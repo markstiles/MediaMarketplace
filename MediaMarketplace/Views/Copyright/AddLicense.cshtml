@@ -17,8 +17,8 @@
 }
 
 <div class="content-container add-license-container">
-    <h2>Add License to your Intellectual Property</h2>
     <div class="site-section add-license">
+        <h2>Add License to your Intellectual Property</h2>
         <form class="form" method="post" action="/Copyright/AddLicenseSubmit">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })

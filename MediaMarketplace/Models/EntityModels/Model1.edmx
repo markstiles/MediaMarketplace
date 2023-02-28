@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MediaMarketplace.Models.EntityModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="copyright_sales">
+          <Key>
+            <PropertyRef Name="copyright_sale_id" />
+          </Key>
+          <Property Name="copyright_sale_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="copyright_sale_copyright_id" Type="int" Nullable="false" />
+          <Property Name="copyright_sale_seller_id" Type="int" Nullable="false" />
+          <Property Name="copyright_sale_buyer_id" Type="int" />
+          <Property Name="copyright_sale_create_date" Type="datetime" Nullable="false" />
+          <Property Name="copyright_sale_close_date" Type="datetime" />
+          <Property Name="copyright_sale_sale_price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="copyrights">
+          <Key>
+            <PropertyRef Name="copyright_id" />
+          </Key>
+          <Property Name="copyright_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="copyright_media_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="copyright_file" Type="varchar(max)" Nullable="false" />
+          <Property Name="copyright_user_id" Type="int" Nullable="false" />
+          <Property Name="copyright_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="license_sales">
+          <Key>
+            <PropertyRef Name="license_sale_id" />
+          </Key>
+          <Property Name="license_sale_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="license_sale_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="license_sale_buyer_id" Type="int" Nullable="false" />
+          <Property Name="license_sale_copyright_id" Type="int" Nullable="false" />
+          <Property Name="license_sale_start_date" Type="date" Nullable="false" />
+          <Property Name="license_sale_end_date" Type="date" Nullable="false" />
+          <Property Name="license_sale_sales_price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="licenses">
+          <Key>
+            <PropertyRef Name="license_id" />
+          </Key>
+          <Property Name="license_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="license_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="license_copyright_id" Type="int" Nullable="false" />
+          <Property Name="license_start_date" Type="date" Nullable="false" />
+          <Property Name="license_end_date" Type="date" Nullable="false" />
+          <Property Name="license_cost" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payment_informations">
+          <Key>
+            <PropertyRef Name="payment_information_id" />
+          </Key>
+          <Property Name="payment_information_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="payment_information_user_id" Type="int" Nullable="false" />
+          <Property Name="payment_information_bank_account" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="payment_information_routing_number" Type="char" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_business_name" Type="varchar" MaxLength="100" />
+          <Property Name="user_first_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_last_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_phone_number" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="fk_copyright_sales_buyer_id">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_buyer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyright_sales_copyright_id">
+          <End Role="copyrights" Type="Self.copyrights" Multiplicity="1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyright_sales_seller_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyrights_user_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="copyrights" Type="Self.copyrights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyrights">
+              <PropertyRef Name="copyright_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_license_sales_buyer_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="license_sales" Type="Self.license_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="license_sales">
+              <PropertyRef Name="license_sale_buyer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_license_sales_copyright_id">
+          <End Role="copyrights" Type="Self.copyrights" Multiplicity="1" />
+          <End Role="license_sales" Type="Self.license_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="license_sales">
+              <PropertyRef Name="license_sale_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_licenses_copyright_id">
+          <End Role="copyrights" Type="Self.copyrights" Multiplicity="1" />
+          <End Role="licenses" Type="Self.licenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="licenses">
+              <PropertyRef Name="license_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payment_informations_user_id">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="payment_informations" Type="Self.payment_informations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="payment_informations">
+              <PropertyRef Name="payment_information_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MediaMarketplaceModelsEntityModelsStoreContainer">
+          <EntitySet Name="copyright_sales" EntityType="Self.copyright_sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="copyrights" EntityType="Self.copyrights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="license_sales" EntityType="Self.license_sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="licenses" EntityType="Self.licenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment_informations" EntityType="Self.payment_informations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_copyright_sales_buyer_id" Association="Self.fk_copyright_sales_buyer_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyright_sales_copyright_id" Association="Self.fk_copyright_sales_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyright_sales_seller_id" Association="Self.fk_copyright_sales_seller_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyrights_user_id" Association="Self.fk_copyrights_user_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyrights" EntitySet="copyrights" />
+          </AssociationSet>
+          <AssociationSet Name="fk_license_sales_buyer_id" Association="Self.fk_license_sales_buyer_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="license_sales" EntitySet="license_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_license_sales_copyright_id" Association="Self.fk_license_sales_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="license_sales" EntitySet="license_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_licenses_copyright_id" Association="Self.fk_licenses_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="licenses" EntitySet="licenses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payment_informations_user_id" Association="Self.fk_payment_informations_user_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="payment_informations" EntitySet="payment_informations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MediaMarketplace.Models.EntityModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="copyright_sales">
+          <Key>
+            <PropertyRef Name="copyright_sale_id" />
+          </Key>
+          <Property Name="copyright_sale_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="copyright_sale_copyright_id" Type="Int32" Nullable="false" />
+          <Property Name="copyright_sale_seller_id" Type="Int32" Nullable="false" />
+          <Property Name="copyright_sale_buyer_id" Type="Int32" />
+          <Property Name="copyright_sale_create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="copyright_sale_close_date" Type="DateTime" Precision="3" />
+          <Property Name="copyright_sale_sale_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.fk_copyright_sales_buyer_id" FromRole="copyright_sales" ToRole="users" />
+          <NavigationProperty Name="copyright" Relationship="Self.fk_copyright_sales_copyright_id" FromRole="copyright_sales" ToRole="copyrights" />
+          <NavigationProperty Name="user1" Relationship="Self.fk_copyright_sales_seller_id" FromRole="copyright_sales" ToRole="users" />
+        </EntityType>
+        <EntityType Name="copyright">
+          <Key>
+            <PropertyRef Name="copyright_id" />
+          </Key>
+          <Property Name="copyright_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="copyright_media_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="copyright_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="copyright_user_id" Type="Int32" Nullable="false" />
+          <Property Name="copyright_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="copyright_sales" Relationship="Self.fk_copyright_sales_copyright_id" FromRole="copyrights" ToRole="copyright_sales" />
+          <NavigationProperty Name="user" Relationship="Self.fk_copyrights_user_id" FromRole="copyrights" ToRole="users" />
+          <NavigationProperty Name="license_sales" Relationship="Self.fk_license_sales_copyright_id" FromRole="copyrights" ToRole="license_sales" />
+          <NavigationProperty Name="licenses" Relationship="Self.fk_licenses_copyright_id" FromRole="copyrights" ToRole="licenses" />
+        </EntityType>
+        <EntityType Name="license_sales">
+          <Key>
+            <PropertyRef Name="license_sale_id" />
+          </Key>
+          <Property Name="license_sale_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="license_sale_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="license_sale_buyer_id" Type="Int32" Nullable="false" />
+          <Property Name="license_sale_copyright_id" Type="Int32" Nullable="false" />
+          <Property Name="license_sale_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="license_sale_end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="license_sale_sales_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="copyright" Relationship="Self.fk_license_sales_copyright_id" FromRole="license_sales" ToRole="copyrights" />
+          <NavigationProperty Name="user" Relationship="Self.fk_license_sales_buyer_id" FromRole="license_sales" ToRole="users" />
+        </EntityType>
+        <EntityType Name="license">
+          <Key>
+            <PropertyRef Name="license_id" />
+          </Key>
+          <Property Name="license_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="license_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="license_copyright_id" Type="Int32" Nullable="false" />
+          <Property Name="license_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="license_end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="license_cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="copyright" Relationship="Self.fk_licenses_copyright_id" FromRole="licenses" ToRole="copyrights" />
+        </EntityType>
+        <EntityType Name="payment_informations">
+          <Key>
+            <PropertyRef Name="payment_information_id" />
+          </Key>
+          <Property Name="payment_information_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="payment_information_user_id" Type="Int32" Nullable="false" />
+          <Property Name="payment_information_bank_account" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="payment_information_routing_number" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.fk_payment_informations_user_id" FromRole="payment_informations" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_business_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="user_first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="copyright_sales" Relationship="Self.fk_copyright_sales_buyer_id" FromRole="users" ToRole="copyright_sales" />
+          <NavigationProperty Name="copyright_sales1" Relationship="Self.fk_copyright_sales_seller_id" FromRole="users" ToRole="copyright_sales" />
+          <NavigationProperty Name="copyrights" Relationship="Self.fk_copyrights_user_id" FromRole="users" ToRole="copyrights" />
+          <NavigationProperty Name="license_sales" Relationship="Self.fk_license_sales_buyer_id" FromRole="users" ToRole="license_sales" />
+          <NavigationProperty Name="payment_informations" Relationship="Self.fk_payment_informations_user_id" FromRole="users" ToRole="payment_informations" />
+        </EntityType>
+        <Association Name="fk_copyright_sales_buyer_id">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_buyer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyright_sales_copyright_id">
+          <End Role="copyrights" Type="Self.copyright" Multiplicity="1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyright_sales_seller_id">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="copyright_sales" Type="Self.copyright_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyright_sales">
+              <PropertyRef Name="copyright_sale_seller_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_copyrights_user_id">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="copyrights" Type="Self.copyright" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="copyrights">
+              <PropertyRef Name="copyright_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_license_sales_copyright_id">
+          <End Role="copyrights" Type="Self.copyright" Multiplicity="1" />
+          <End Role="license_sales" Type="Self.license_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="license_sales">
+              <PropertyRef Name="license_sale_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_licenses_copyright_id">
+          <End Role="copyrights" Type="Self.copyright" Multiplicity="1" />
+          <End Role="licenses" Type="Self.license" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="copyrights">
+              <PropertyRef Name="copyright_id" />
+            </Principal>
+            <Dependent Role="licenses">
+              <PropertyRef Name="license_copyright_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_license_sales_buyer_id">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="license_sales" Type="Self.license_sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="license_sales">
+              <PropertyRef Name="license_sale_buyer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payment_informations_user_id">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="payment_informations" Type="Self.payment_informations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="payment_informations">
+              <PropertyRef Name="payment_information_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MediaMarketplaceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="copyright_sales" EntityType="Self.copyright_sales" />
+          <EntitySet Name="copyrights" EntityType="Self.copyright" />
+          <EntitySet Name="license_sales" EntityType="Self.license_sales" />
+          <EntitySet Name="licenses" EntityType="Self.license" />
+          <EntitySet Name="payment_informations" EntityType="Self.payment_informations" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="fk_copyright_sales_buyer_id" Association="Self.fk_copyright_sales_buyer_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyright_sales_copyright_id" Association="Self.fk_copyright_sales_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyright_sales_seller_id" Association="Self.fk_copyright_sales_seller_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyright_sales" EntitySet="copyright_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_copyrights_user_id" Association="Self.fk_copyrights_user_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="copyrights" EntitySet="copyrights" />
+          </AssociationSet>
+          <AssociationSet Name="fk_license_sales_copyright_id" Association="Self.fk_license_sales_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="license_sales" EntitySet="license_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_licenses_copyright_id" Association="Self.fk_licenses_copyright_id">
+            <End Role="copyrights" EntitySet="copyrights" />
+            <End Role="licenses" EntitySet="licenses" />
+          </AssociationSet>
+          <AssociationSet Name="fk_license_sales_buyer_id" Association="Self.fk_license_sales_buyer_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="license_sales" EntitySet="license_sales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payment_informations_user_id" Association="Self.fk_payment_informations_user_id">
+            <End Role="users" EntitySet="users" />
+            <End Role="payment_informations" EntitySet="payment_informations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MediaMarketplaceModelsEntityModelsStoreContainer" CdmEntityContainer="MediaMarketplaceEntities">
+          <EntitySetMapping Name="copyright_sales">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.copyright_sales">
+              <MappingFragment StoreEntitySet="copyright_sales">
+                <ScalarProperty Name="copyright_sale_id" ColumnName="copyright_sale_id" />
+                <ScalarProperty Name="copyright_sale_copyright_id" ColumnName="copyright_sale_copyright_id" />
+                <ScalarProperty Name="copyright_sale_seller_id" ColumnName="copyright_sale_seller_id" />
+                <ScalarProperty Name="copyright_sale_buyer_id" ColumnName="copyright_sale_buyer_id" />
+                <ScalarProperty Name="copyright_sale_create_date" ColumnName="copyright_sale_create_date" />
+                <ScalarProperty Name="copyright_sale_close_date" ColumnName="copyright_sale_close_date" />
+                <ScalarProperty Name="copyright_sale_sale_price" ColumnName="copyright_sale_sale_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="copyrights">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.copyright">
+              <MappingFragment StoreEntitySet="copyrights">
+                <ScalarProperty Name="copyright_id" ColumnName="copyright_id" />
+                <ScalarProperty Name="copyright_media_type" ColumnName="copyright_media_type" />
+                <ScalarProperty Name="copyright_file" ColumnName="copyright_file" />
+                <ScalarProperty Name="copyright_user_id" ColumnName="copyright_user_id" />
+                <ScalarProperty Name="copyright_active" ColumnName="copyright_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="license_sales">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.license_sales">
+              <MappingFragment StoreEntitySet="license_sales">
+                <ScalarProperty Name="license_sale_id" ColumnName="license_sale_id" />
+                <ScalarProperty Name="license_sale_type" ColumnName="license_sale_type" />
+                <ScalarProperty Name="license_sale_buyer_id" ColumnName="license_sale_buyer_id" />
+                <ScalarProperty Name="license_sale_copyright_id" ColumnName="license_sale_copyright_id" />
+                <ScalarProperty Name="license_sale_start_date" ColumnName="license_sale_start_date" />
+                <ScalarProperty Name="license_sale_end_date" ColumnName="license_sale_end_date" />
+                <ScalarProperty Name="license_sale_sales_price" ColumnName="license_sale_sales_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="licenses">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.license">
+              <MappingFragment StoreEntitySet="licenses">
+                <ScalarProperty Name="license_id" ColumnName="license_id" />
+                <ScalarProperty Name="license_type" ColumnName="license_type" />
+                <ScalarProperty Name="license_copyright_id" ColumnName="license_copyright_id" />
+                <ScalarProperty Name="license_start_date" ColumnName="license_start_date" />
+                <ScalarProperty Name="license_end_date" ColumnName="license_end_date" />
+                <ScalarProperty Name="license_cost" ColumnName="license_cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_informations">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.payment_informations">
+              <MappingFragment StoreEntitySet="payment_informations">
+                <ScalarProperty Name="payment_information_id" ColumnName="payment_information_id" />
+                <ScalarProperty Name="payment_information_user_id" ColumnName="payment_information_user_id" />
+                <ScalarProperty Name="payment_information_bank_account" ColumnName="payment_information_bank_account" />
+                <ScalarProperty Name="payment_information_routing_number" ColumnName="payment_information_routing_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_business_name" ColumnName="user_business_name" />
+                <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
+                <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
+                <ScalarProperty Name="user_phone_number" ColumnName="user_phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

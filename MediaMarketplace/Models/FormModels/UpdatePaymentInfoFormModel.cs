@@ -7,8 +7,10 @@ using System.Web;
 
 namespace MediaMarketplace.Models.FormModels
 {
-    public class PaymentInfoFormModel
+    public class UpdatePaymentInfoFormModel
     {
+        [Required(ErrorMessage = AccountMessages.IdRequired)]
+        public int Id { get; set; }
         [Required(ErrorMessage = AccountMessages.BankAccountRequired)]
         public string BankAccount { get; set; }
         [Required(ErrorMessage = AccountMessages.RoutingNumberRequired)]

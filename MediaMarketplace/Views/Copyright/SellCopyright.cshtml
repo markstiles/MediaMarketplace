@@ -6,8 +6,8 @@
 }
 
 <div class="content-container sell-copyright-container">
-    <h2>Place Your Copyright for Sale</h2>
     <div class="site-section sell-copyright">
+        <h2>Place Your Copyright for Sale</h2>
         <form class="form" method="post" action="/Copyright/SellCopyrightSubmit">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })

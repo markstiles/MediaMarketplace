@@ -5,8 +5,8 @@
 }
 
 <div class="content-container account-info-container">
-    <h2>Update Account Information</h2>
     <div class="site-section account-info">
+        <h2>Update Account Information</h2>
         <form class="form" method="post" action="/Account/UpdateAccountInfoSubmit">
             <fieldset>
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "email", LabelText = "Email" })
@@ -16,9 +16,6 @@
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "first-name", LabelText = "First Name" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "last-name", LabelText = "Last Name" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "business-name", LabelText = "Business Name" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "address", LabelText = "Address" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "region", LabelText = "Region" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "postal-code", LabelText = "Postal Code" })
                 @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Update Account" })
             </fieldset>
         </form>

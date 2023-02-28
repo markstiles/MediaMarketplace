@@ -9,17 +9,17 @@ namespace MediaMarketplace.Services.System
 {
     public interface IUserSessionService
     {
-        void StoreUser(UserEntityModel user);
+        void StoreUser(user user);
         void ClearUser();
         bool IsLoggedIn();
-        UserEntityModel GetUser();
+        user GetUser();
     }
 
     public class UserSessionService : IUserSessionService
     {
         public string UserSessionKey = "user-profile";
 
-        public void StoreUser(UserEntityModel user)
+        public void StoreUser(user user)
         {
             HttpContext.Current.Session.Add(UserSessionKey, user);
         }
@@ -29,16 +29,16 @@ namespace MediaMarketplace.Services.System
             HttpContext.Current.Session.Remove(UserSessionKey);
         }
 
-        public UserEntityModel GetUser()
+        public user GetUser()
         {
-            var user = (UserEntityModel)HttpContext.Current.Session[UserSessionKey];
+            var user = (user)HttpContext.Current.Session[UserSessionKey];
 
             return user; 
         }
 
         public bool IsLoggedIn()
         {
-            var user = (UserEntityModel)HttpContext.Current.Session[UserSessionKey];
+            var user = (user)HttpContext.Current.Session[UserSessionKey];
 
             return user != null;
         }

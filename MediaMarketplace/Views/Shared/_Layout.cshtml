@@ -12,24 +12,20 @@
 </head>
 <body>
     <header>
-        <div class="site-name">Digital Media Marketplace</div>
+        <div class="site-name">
+            <a href="/">
+                Digital Media Marketplace
+            </a>
+        </div>
         <div class="navbar">
             <ul class="topitems">
-                <li>
-                    Home
-                    <ul class="subitems">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        @if (thisModel.IsUserLoggedIn)
-                        {
-                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
-                        }
-                    </ul>
-                </li>
                 <li>
                     Account
                     <ul class="subitems">
                         @if (thisModel.IsUserLoggedIn)
                         {
+                            <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                            <li>@Html.ActionLink("View Payment Info", "ViewPaymentInfo", "Account")</li>
                             <li>@Html.ActionLink("Add Payment Info", "AddPaymentInfo", "Account")</li>
                             <li>@Html.ActionLink("Update Account Info", "UpdateAccountInfo", "Account")</li>
                         }
@@ -62,7 +58,6 @@
         }
     </header>
     <div class="content">
-        <h1>@ViewBag.Title</h1>
         @RenderBody()
         @Html.Partial("/Views/Shared/_ProgressIndicator.cshtml")
     </div>
@@ -71,7 +66,9 @@
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="~/assets/js/global.js"></script>
-    <script src="~/assets/js/account.js"></script>
+    <script src="~/assets/js/login.js"></script>
+    <script src="~/assets/js/register.js"></script>
+    <script src="~/assets/js/payinfo.js"></script>
     <script src="~/assets/js/copyright.js"></script>
 </body>
 </html>

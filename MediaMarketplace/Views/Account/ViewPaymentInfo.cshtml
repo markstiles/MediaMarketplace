@@ -1,0 +1,37 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@model PaymentInfoViewModel
+@{
+    ViewBag.Title = "Delete Payment Information";
+}
+
+<div class="content-container pay-info-container">
+    <div class="site-section pay-info">
+        <h2>View Payment Information</h2>
+        @foreach (var i in Model.PaymentInfos)
+        {
+            <form class="form" method="post" update-action="/Account/UpdatePaymentInfoSubmit" delete-action="/Account/DeletePaymentInfoSubmit">
+                <fieldset>
+                    <input type="hidden" class="pay-info-id" value="@i.payment_information_id" />
+                    @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "bank-account", LabelText = "Bank Account", FieldValue = i.payment_information_bank_account })
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "update", ButtonText = "Update Payment Information" })
+                    @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "routing-number", LabelText = "Routing Number", FieldValue = i.payment_information_routing_number })
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "delete", ButtonText = "Delete Payment Information" })
+                </fieldset>
+            </form>
+        }
+        <div class="submit-results">
+            <div class="success update-pay-info-success">
+                You successfully updated a payment method.
+            </div>
+            <div class="failure update-pay-info-failure">
+                There was an issue updating a payment method.
+            </div>
+            <div class="success delete-pay-info-success">
+                You successfully removed a payment method.
+            </div>
+            <div class="failure delete-pay-info-failure">
+                There was an issue removing a payment method.
+            </div>
+        </div>
+    </div>
+</div>
