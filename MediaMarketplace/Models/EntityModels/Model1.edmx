@@ -16,12 +16,14 @@
           <Property Name="copyright_sale_create_date" Type="datetime" Nullable="false" />
           <Property Name="copyright_sale_close_date" Type="datetime" />
           <Property Name="copyright_sale_sale_price" Type="money" Nullable="false" />
+          <Property Name="copyright_sale_active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="copyrights">
           <Key>
             <PropertyRef Name="copyright_id" />
           </Key>
           <Property Name="copyright_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="copyright_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="copyright_media_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="copyright_file" Type="varchar(max)" Nullable="false" />
           <Property Name="copyright_user_id" Type="int" Nullable="false" />
@@ -70,6 +72,40 @@
           <Property Name="user_first_name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="user_last_name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="user_phone_number" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MediaMarketplace.dbo.v_copyright_sales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_copyright_sales">
+          <Key>
+            <PropertyRef Name="copyright_sale_id" />
+            <PropertyRef Name="copyright_sale_copyright_id" />
+            <PropertyRef Name="copyright_sale_seller_id" />
+            <PropertyRef Name="copyright_sale_create_date" />
+            <PropertyRef Name="copyright_sale_sale_price" />
+          </Key>
+          <Property Name="copyright_sale_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="copyright_sale_copyright_id" Type="int" Nullable="false" />
+          <Property Name="copyright_sale_seller_id" Type="int" Nullable="false" />
+          <Property Name="copyright_sale_buyer_id" Type="int" />
+          <Property Name="copyright_sale_create_date" Type="datetime" Nullable="false" />
+          <Property Name="copyright_sale_close_date" Type="datetime" />
+          <Property Name="copyright_sale_sale_price" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MediaMarketplace.dbo.v_copyrights' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_copyrights">
+          <Key>
+            <PropertyRef Name="copyright_id" />
+            <PropertyRef Name="copyright_name" />
+            <PropertyRef Name="copyright_media_type" />
+            <PropertyRef Name="copyright_file" />
+            <PropertyRef Name="copyright_user_id" />
+          </Key>
+          <Property Name="copyright_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="copyright_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="copyright_media_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="copyright_file" Type="varchar(max)" Nullable="false" />
+          <Property Name="copyright_user_id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="fk_copyright_sales_buyer_id">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
@@ -174,6 +210,26 @@
           <EntitySet Name="licenses" EntityType="Self.licenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="payment_informations" EntityType="Self.payment_informations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_copyright_sales" EntityType="Self.v_copyright_sales" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_copyright_sales].[copyright_sale_id] AS [copyright_sale_id], 
+    [v_copyright_sales].[copyright_sale_copyright_id] AS [copyright_sale_copyright_id], 
+    [v_copyright_sales].[copyright_sale_seller_id] AS [copyright_sale_seller_id], 
+    [v_copyright_sales].[copyright_sale_buyer_id] AS [copyright_sale_buyer_id], 
+    [v_copyright_sales].[copyright_sale_create_date] AS [copyright_sale_create_date], 
+    [v_copyright_sales].[copyright_sale_close_date] AS [copyright_sale_close_date], 
+    [v_copyright_sales].[copyright_sale_sale_price] AS [copyright_sale_sale_price]
+    FROM [dbo].[v_copyright_sales] AS [v_copyright_sales]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_copyrights" EntityType="Self.v_copyrights" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_copyrights].[copyright_id] AS [copyright_id], 
+    [v_copyrights].[copyright_name] AS [copyright_name], 
+    [v_copyrights].[copyright_media_type] AS [copyright_media_type], 
+    [v_copyrights].[copyright_file] AS [copyright_file], 
+    [v_copyrights].[copyright_user_id] AS [copyright_user_id]
+    FROM [dbo].[v_copyrights] AS [v_copyrights]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="fk_copyright_sales_buyer_id" Association="Self.fk_copyright_sales_buyer_id">
             <End Role="users" EntitySet="users" />
             <End Role="copyright_sales" EntitySet="copyright_sales" />
@@ -225,6 +281,7 @@
           <NavigationProperty Name="user" Relationship="Self.fk_copyright_sales_buyer_id" FromRole="copyright_sales" ToRole="users" />
           <NavigationProperty Name="copyright" Relationship="Self.fk_copyright_sales_copyright_id" FromRole="copyright_sales" ToRole="copyrights" />
           <NavigationProperty Name="user1" Relationship="Self.fk_copyright_sales_seller_id" FromRole="copyright_sales" ToRole="users" />
+          <Property Name="copyright_sale_active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="copyright">
           <Key>
@@ -239,6 +296,7 @@
           <NavigationProperty Name="user" Relationship="Self.fk_copyrights_user_id" FromRole="copyrights" ToRole="users" />
           <NavigationProperty Name="license_sales" Relationship="Self.fk_license_sales_copyright_id" FromRole="copyrights" ToRole="license_sales" />
           <NavigationProperty Name="licenses" Relationship="Self.fk_licenses_copyright_id" FromRole="copyrights" ToRole="licenses" />
+          <Property Name="copyright_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="license_sales">
           <Key>
@@ -428,7 +486,39 @@
             <End Role="users" EntitySet="users" />
             <End Role="payment_informations" EntitySet="payment_informations" />
           </AssociationSet>
+          <EntitySet Name="v_copyright_sales" EntityType="MediaMarketplace.Models.EntityModels.v_copyright_sales" />
+          <EntitySet Name="v_copyrights" EntityType="MediaMarketplace.Models.EntityModels.v_copyrights" />
         </EntityContainer>
+        <EntityType Name="v_copyright_sales">
+          <Key>
+            <PropertyRef Name="copyright_sale_id" />
+            <PropertyRef Name="copyright_sale_copyright_id" />
+            <PropertyRef Name="copyright_sale_seller_id" />
+            <PropertyRef Name="copyright_sale_create_date" />
+            <PropertyRef Name="copyright_sale_sale_price" />
+          </Key>
+          <Property Name="copyright_sale_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="copyright_sale_copyright_id" Type="Int32" Nullable="false" />
+          <Property Name="copyright_sale_seller_id" Type="Int32" Nullable="false" />
+          <Property Name="copyright_sale_buyer_id" Type="Int32" />
+          <Property Name="copyright_sale_create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="copyright_sale_close_date" Type="DateTime" Precision="3" />
+          <Property Name="copyright_sale_sale_price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="v_copyrights">
+          <Key>
+            <PropertyRef Name="copyright_id" />
+            <PropertyRef Name="copyright_name" />
+            <PropertyRef Name="copyright_media_type" />
+            <PropertyRef Name="copyright_file" />
+            <PropertyRef Name="copyright_user_id" />
+          </Key>
+          <Property Name="copyright_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="copyright_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="copyright_media_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="copyright_file" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="copyright_user_id" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -438,6 +528,7 @@
           <EntitySetMapping Name="copyright_sales">
             <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.copyright_sales">
               <MappingFragment StoreEntitySet="copyright_sales">
+                <ScalarProperty Name="copyright_sale_active" ColumnName="copyright_sale_active" />
                 <ScalarProperty Name="copyright_sale_id" ColumnName="copyright_sale_id" />
                 <ScalarProperty Name="copyright_sale_copyright_id" ColumnName="copyright_sale_copyright_id" />
                 <ScalarProperty Name="copyright_sale_seller_id" ColumnName="copyright_sale_seller_id" />
@@ -451,6 +542,7 @@
           <EntitySetMapping Name="copyrights">
             <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.copyright">
               <MappingFragment StoreEntitySet="copyrights">
+                <ScalarProperty Name="copyright_name" ColumnName="copyright_name" />
                 <ScalarProperty Name="copyright_id" ColumnName="copyright_id" />
                 <ScalarProperty Name="copyright_media_type" ColumnName="copyright_media_type" />
                 <ScalarProperty Name="copyright_file" ColumnName="copyright_file" />
@@ -504,6 +596,30 @@
                 <ScalarProperty Name="user_first_name" ColumnName="user_first_name" />
                 <ScalarProperty Name="user_last_name" ColumnName="user_last_name" />
                 <ScalarProperty Name="user_phone_number" ColumnName="user_phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_copyright_sales">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.v_copyright_sales">
+              <MappingFragment StoreEntitySet="v_copyright_sales">
+                <ScalarProperty Name="copyright_sale_sale_price" ColumnName="copyright_sale_sale_price" />
+                <ScalarProperty Name="copyright_sale_close_date" ColumnName="copyright_sale_close_date" />
+                <ScalarProperty Name="copyright_sale_create_date" ColumnName="copyright_sale_create_date" />
+                <ScalarProperty Name="copyright_sale_buyer_id" ColumnName="copyright_sale_buyer_id" />
+                <ScalarProperty Name="copyright_sale_seller_id" ColumnName="copyright_sale_seller_id" />
+                <ScalarProperty Name="copyright_sale_copyright_id" ColumnName="copyright_sale_copyright_id" />
+                <ScalarProperty Name="copyright_sale_id" ColumnName="copyright_sale_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_copyrights">
+            <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.v_copyrights">
+              <MappingFragment StoreEntitySet="v_copyrights">
+                <ScalarProperty Name="copyright_user_id" ColumnName="copyright_user_id" />
+                <ScalarProperty Name="copyright_file" ColumnName="copyright_file" />
+                <ScalarProperty Name="copyright_media_type" ColumnName="copyright_media_type" />
+                <ScalarProperty Name="copyright_name" ColumnName="copyright_name" />
+                <ScalarProperty Name="copyright_id" ColumnName="copyright_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

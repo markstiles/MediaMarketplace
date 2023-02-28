@@ -11,7 +11,7 @@
         {
             <form class="form" method="post" update-action="/Account/UpdatePaymentInfoSubmit" delete-action="/Account/DeletePaymentInfoSubmit">
                 <fieldset>
-                    <input type="hidden" class="pay-info-id" value="@i.payment_information_id" />
+                    @Html.Partial("/Views/Shared/_FormHidden.cshtml", new FormTextViewModel { CssClass = "pay-info-id", LabelText = "Bank Account", FieldValue = i.payment_information_id })
                     @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "bank-account", LabelText = "Bank Account", FieldValue = i.payment_information_bank_account })
                     @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { CssClass = "update", ButtonText = "Update Payment Information" })
                     @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "routing-number", LabelText = "Routing Number", FieldValue = i.payment_information_routing_number })

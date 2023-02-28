@@ -19,6 +19,8 @@
         <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_licenses_copyright_id" ManuallyRouted="false" />
         <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_license_sales_buyer_id" ManuallyRouted="false" />
         <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_payment_informations_user_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.v_copyright_sales" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.v_copyrights" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

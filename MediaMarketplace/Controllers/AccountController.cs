@@ -96,6 +96,9 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult RegisterSubmit(RegisterFormModel form)
         {
+            if (form.Password != form.PasswordConfirm)
+                return Json(new { Succeeded = false, ErrorMessage = "The password must match the password confirm" });
+
             var user = new user
             {
                 user_first_name = form.FirstName,
@@ -130,7 +133,7 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult LoginSubmit(LoginFormModel form)
         {
-            var user = DbContext.users.First(a => a.user_email == form.Email && a.user_password == form.Password);
+            var user = DbContext.users.FirstOrDefault(a => a.user_email == form.Email && a.user_password == form.Password);
 
             if (user == null) return Json(new TransactionResult
             {
@@ -155,7 +158,7 @@ namespace MediaMarketplace.Controllers
         public ActionResult UpdateAccountInfoSubmit(AccountInfoFormModel form)
         {
             var user_id = UserSession.GetUser().user_id;
-            var user = DbContext.users.First(a => a.user_id == user_id);
+            var user = DbContext.users.FirstOrDefault(a => a.user_id == user_id);
             if(user == null) return Json(new TransactionResult
             {
                 Succeeded = false,
@@ -214,7 +217,7 @@ namespace MediaMarketplace.Controllers
         public ActionResult UpdatePaymentInfoSubmit(UpdatePaymentInfoFormModel form)
         {
             var user = UserSession.GetUser();
-            var payInfo = DbContext.payment_informations.First(a
+            var payInfo = DbContext.payment_informations.FirstOrDefault(a
                 => a.payment_information_user_id == user.user_id
                 && a.payment_information_id == form.Id);
             payInfo.payment_information_bank_account = form.BankAccount;
@@ -234,7 +237,7 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult DeletePaymentInfoSubmit(DeletePaymentInfoFormModel form)
         {
-            var payInfo = DbContext.payment_informations.First(a => a.payment_information_id == form.Id);
+            var payInfo = DbContext.payment_informations.FirstOrDefault(a => a.payment_information_id == form.Id);
             DbContext.payment_informations.Remove(payInfo);
             DbContext.SaveChanges();
 

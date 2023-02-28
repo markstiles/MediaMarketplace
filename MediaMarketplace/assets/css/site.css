@@ -78,6 +78,25 @@ label { display:inline-block; font-size:12px; vertical-align: middle; width: 125
 .pay-info .delete { background-color: #ed6561; }
 .pay-info .delete:hover { background-color: #ffc347; }
 
+/* VIEW COPYRIGHTS */
+.view-copyright h2 { margin-bottom:20px; }
+.view-copyright form { vertical-align:top; margin: 5px 5px; display: inline-block; width: 470px; border: 1px solid #236bc5; padding: 5px; height:190px; position:relative; }
+.view-copyright fieldset { margin:0px; }
+.view-copyright fieldset span { font-weight:bold; }
+.media-name { }
+.media-active { }
+.media-type { }
+.media-file { }
+.media-file img { height: 200px; position: absolute; right: 0; top: 0;}
+.media-file audio { }    
+.media-file video { }
+.media-file a { color: #236bc5; font-weight:bold; }
+.media-file a:hover { color: #ffc347; }
+.view-copyright fieldset .button-row { padding:0px; position:absolute; bottom: 5px; }
+.view-copyright fieldset .button-row .show { display:block; }
+.view-copyright fieldset .button-row .hide { display:none; }
+
+
 @media only screen and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     body { width: auto; margin: 0px 10px; }
     header { margin-top:30px; }

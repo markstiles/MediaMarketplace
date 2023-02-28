@@ -12,7 +12,7 @@ namespace MediaMarketplace.Models.EntityModels
     using System;
     using System.Collections.Generic;
     
-    public partial class copyright_sales
+    public partial class v_copyright_sales
     {
         public int copyright_sale_id { get; set; }
         public int copyright_sale_copyright_id { get; set; }
@@ -21,10 +21,5 @@ namespace MediaMarketplace.Models.EntityModels
         public System.DateTime copyright_sale_create_date { get; set; }
         public Nullable<System.DateTime> copyright_sale_close_date { get; set; }
         public decimal copyright_sale_sale_price { get; set; }
-        public bool copyright_sale_active { get; set; }
-    
-        public virtual user user { get; set; }
-        public virtual copyright copyright { get; set; }
-        public virtual user user1 { get; set; }
     }
 }

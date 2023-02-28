@@ -1,4 +1,5 @@
 ﻿using MediaMarketplace.Models;
+using MediaMarketplace.Models.EntityModels;
 using MediaMarketplace.Models.FormModels;
 using MediaMarketplace.Models.FormModels.Attributes;
 using MediaMarketplace.Models.ViewModels;
@@ -17,16 +18,33 @@ namespace MediaMarketplace.Controllers
         #region Constructor 
 
         protected readonly IUserSessionService UserSession;
+        protected readonly MediaMarketplaceEntities DbContext;
 
-        public CopyrightController(IUserSessionService userSession)
+        public CopyrightController(
+            IUserSessionService userSession,
+            MediaMarketplaceEntities dbContext)
         {
             UserSession = userSession;
+            DbContext = dbContext;
             ViewData["LayoutViewModel"] = new LayoutViewModel(UserSession);
         }
 
         #endregion
 
         #region View Methods
+
+        [CheckLogin]
+        public ActionResult ViewCopyrights()
+        {
+            var user = UserSession.GetUser();
+            var copyrightFiles = DbContext.copyrights.Where(a => a.copyright_user_id == user.user_id).ToList();
+            var model = new ViewCopyrightsViewModel
+            {
+                CopyrightFiles = copyrightFiles
+            };
+
+            return View(model);
+        }
 
         [CheckLogin]
         public ActionResult AddCopyright()
@@ -106,30 +124,80 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult AddCopyrightSubmit(AddCopyrightFormModel form)
         {
-            try
+            if (form.File.ContentLength < 1)
+                return Json(new { Succeeded = false, ErrorMessage = "file was empty" });
+
+            var user = UserSession.GetUser();
+            var userFolder = $"{Request.PhysicalApplicationPath}/uploads/{user.user_id}";
+            if (!Directory.Exists(userFolder))
+                Directory.CreateDirectory(userFolder);  
+
+            var randomId = Guid.NewGuid();
+            string fileExtension = Path.GetExtension(form.File.FileName);
+            string virtualPath = Server.MapPath($"~/uploads/{user.user_id}/{randomId}{fileExtension}");
+            form.File.SaveAs(virtualPath);
+            string relativePath = $"/uploads/{user.user_id}/{randomId}{fileExtension}";
+
+            var copyrightItem = new copyright
             {
-                if (form.File.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(form.File.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
-                    form.File.SaveAs(_path);
+                copyright_user_id = user.user_id,
+                copyright_name = form.Name,
+                copyright_file = relativePath,
+                copyright_media_type = form.FileType,
+                copyright_active = true,
+            };
+            DbContext.copyrights.Add(copyrightItem);
+            DbContext.SaveChanges();
 
-
-                }
-                //ViewBag.Message = "File Uploaded Successfully!!";
-            }
-            catch
-            {
-                //ViewBag.Message = "File upload failed!!";
-            }
-
-            var result = new TransactionResult
+            return Json(new TransactionResult
             {
                 Succeeded = true,
                 ErrorMessage = string.Empty
-            };
+            });
+        }
 
-            return Json(result);
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult ReactivateCopyrightSubmit(ActivateCopyrightFormModel form)
+        {
+            var user = UserSession.GetUser();
+            var copyrightFile = DbContext.copyrights.FirstOrDefault(a
+                => a.copyright_id == form.Id
+                && a.copyright_user_id == user.user_id);
+
+            if (copyrightFile == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The copyright file wasn't found" });
+
+            copyrightFile.copyright_active = true;
+            DbContext.SaveChanges();
+
+            return Json(new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            });
+        }
+
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult DeactivateCopyrightSubmit(ActivateCopyrightFormModel form)
+        {
+            var user = UserSession.GetUser();
+            var copyrightFile = DbContext.copyrights.FirstOrDefault(a 
+                => a.copyright_id == form.Id 
+                && a.copyright_user_id == user.user_id);
+
+            if (copyrightFile == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The copyright file wasn't found" });
+
+            copyrightFile.copyright_active = false;
+            DbContext.SaveChanges();
+
+            return Json(new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            });
         }
 
         [HttpPost]

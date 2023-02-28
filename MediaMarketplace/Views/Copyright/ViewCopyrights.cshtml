@@ -1,0 +1,67 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@using System.Web.UI.WebControls
+@model ViewCopyrightsViewModel
+@{
+    ViewBag.Title = "Add Copyright";
+}
+
+<div class="content-container view-copyright-container">
+    <div class="site-section view-copyright">
+        <h2>Your Copyrighted Intellectual Property</h2>
+        @foreach (var f in Model.CopyrightFiles)
+        {
+            var isActive = (f.copyright_active) ? "True" : "False";
+
+            <form class="form" id="view-copyright-form" method="post" deactivate-action="/Copyright/DeactivateCopyrightSubmit" reactivate-action="/Copyright/ReactivateCopyrightSubmit">
+                <fieldset>
+                    <div class="media-name">Name: <span>@f.copyright_name</span></div>
+                    <div class="media-active">Is Active: <span>@isActive</span></div>
+                    <div class="media-type">Media Type: <span>@f.copyright_media_type</span></div>
+                    <div class="media-file">
+                        @if (f.copyright_media_type == "image")
+                        {
+                            <img src="@f.copyright_file" />
+                        }
+                        else if (f.copyright_media_type == "audio")
+                        {
+                            <audio controls src="@f.copyright_file"></audio>
+                        }
+                        else if (f.copyright_media_type == "video")
+                        {
+                            <video controls width="250">
+                                <source src="@f.copyright_file" type="video/mp4">
+                            </video>
+                        }
+                        else if (f.copyright_media_type == "document")
+                        {
+                            <a href="@f.copyright_file" target="_blank">Open File</a>
+                        }
+                    </div>
+                    @Html.Partial("/Views/Shared/_FormHidden.cshtml", new FormTextViewModel { CssClass = "copyright-id", FieldValue = f.copyright_id.ToString() })
+                    @{ 
+                        var reClass = "reactivate";
+                        reClass += !f.copyright_active ? " show" : " hide";
+                        var deClass = "deactivate";
+                        deClass += f.copyright_active ? " show" : " hide";
+                    }
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Reactivate Copyright", CssClass = reClass })
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Deactivate Copyright", CssClass = deClass })
+                </fieldset>
+            </form>
+        }        
+        <div class="submit-results">
+            <div class="success reactivate-copyright-success">
+                You successfully reactivated your copyrighted property.
+            </div>
+            <div class="failure reactivate-copyright-failure">
+                There was an issue reactivating your copyrighted property.
+            </div>
+            <div class="success deactivate-copyright-success">
+                You successfully deactivated your copyrighted property.
+            </div>
+            <div class="failure deactivate-copyright-failure">
+                There was an issue deactivating your copyrighted property.
+            </div>
+        </div>
+    </div>
+</div>

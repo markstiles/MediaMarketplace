@@ -274,8 +274,15 @@
     <Compile Include="Models\EntityModels\user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EntityModels\v_copyrights.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModels\v_copyright_sales.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FormModels\Attributes\CheckLogin.cs" />
     <Compile Include="Models\FormModels\BuyLicenseFormModel.cs" />
+    <Compile Include="Models\FormModels\ActivateCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\DeletePaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\UpdatePaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\SellLicenseFormModel.cs" />
@@ -308,6 +315,7 @@
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyLicenseViewModel.cs" />
     <Compile Include="Models\ViewModels\AddLicenseViewModel.cs" />
+    <Compile Include="Models\ViewModels\ViewCopyrightsViewModel.cs" />
     <Compile Include="Models\ViewModels\SellCopyrightViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyCopyrightViewModel.cs" />
     <Compile Include="Models\ViewModels\PaymentInfoViewModel.cs" />
@@ -342,6 +350,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="uploads\placeholder.txt" />
     <Content Include="Views\Account\AddPaymentInfo.cshtml" />
     <Content Include="Views\Account\RegisterLogin.cshtml" />
     <Content Include="Views\Account\UpdateAccountInfo.cshtml" />
@@ -380,6 +389,8 @@
     <Content Include="Views\Shared\_FormCheckList.cshtml" />
     <Content Include="Views\Account\ViewPaymentInfo.cshtml" />
     <Content Include="Views\Shared\_FormPassword.cshtml" />
+    <Content Include="Views\Copyright\ViewCopyrights.cshtml" />
+    <Content Include="Views\Shared\_FormHidden.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

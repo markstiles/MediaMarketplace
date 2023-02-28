@@ -31,5 +31,7 @@ namespace MediaMarketplace.Models.EntityModels
         public virtual DbSet<license> licenses { get; set; }
         public virtual DbSet<payment_informations> payment_informations { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<v_copyright_sales> v_copyright_sales { get; set; }
+        public virtual DbSet<v_copyrights> v_copyrights { get; set; }
     }
 }

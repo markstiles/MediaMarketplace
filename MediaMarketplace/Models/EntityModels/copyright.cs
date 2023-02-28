@@ -27,6 +27,7 @@ namespace MediaMarketplace.Models.EntityModels
         public string copyright_file { get; set; }
         public int copyright_user_id { get; set; }
         public bool copyright_active { get; set; }
+        public string copyright_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<copyright_sales> copyright_sales { get; set; }
