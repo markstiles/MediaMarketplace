@@ -15,10 +15,11 @@
 <div class="content-container add-copyright-container">
     <div class="site-section add-copyright">
         <h2>Add Copyrighted Intellectual Property</h2>
-        <form class="form" method="post" action="/Copyright/AddCopyrightSubmit" enctype="multipart/form-data">
+        <form class="form" id="add-copyright-form" method="post" action="/Copyright/AddCopyrightSubmit" enctype="multipart/form-data">
             <fieldset>
-                @Html.Partial("/Views/Shared/_FormFile.cshtml", new FormFileViewModel { CssClass = "file-upload", LabelText = "Upload File" })
-                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "file-type", LabelText = "File Type", ListItems = fileTypes })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "name", LabelText = "File Name" })
+                @Html.Partial("/Views/Shared/_FormFile.cshtml", new FormFileViewModel { CssClass = "file", LabelText = "Upload File" })
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "filetype", LabelText = "File Type", ListItems = fileTypes })
                 @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Add Copyright" })
             </fieldset>
         </form>

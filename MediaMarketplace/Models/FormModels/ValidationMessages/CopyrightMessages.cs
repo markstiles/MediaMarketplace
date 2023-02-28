@@ -7,6 +7,7 @@ namespace MediaMarketplace.Models.FormModels.ValidationMessages
 {
     public static class CopyrightMessages
     {
+        public const string NameRequired = "You must provide a name";
         public const string FileRequired = "You must provide a file";
         public const string FileTypeRequired = "You must provide a file type";
     }

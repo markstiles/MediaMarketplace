@@ -9,7 +9,7 @@
             {
                 var item = Model.ListItems[i];
                 <div class="form-group">
-                    <input type="radio" id="item-@i" value="@item.Value" />
+                    <input type="radio" id="item-@i" name="item-@i" value="@item.Value" />
                     <label for="item-@i">@item.Text</label>
                 </div>
             }

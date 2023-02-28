@@ -19,24 +19,26 @@ jQuery(document).ready(function ()
 
     function AddCopyright()
     {
-        var fileTypeValue = jQuery(addCopyrightForm + " .file-type").val();
+        var formData = new FormData(document.getElementById("add-copyright-form"));
 
-        jQuery(progressIndicator).show();
-
-        jQuery.post(
-            jQuery(addCopyrightForm).attr("action"),
+        jQuery.ajax({
+            type: 'POST',
+            url: jQuery(addCopyrightForm).attr("action"),
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (r)
             {
-                File: new FormData(jQuery(addCopyrightForm)[0]),
-                FileType: fileTypeValue
-            }
-        ).done(function (r) {
-            jQuery(progressIndicator).hide();
+                jQuery(progressIndicator).hide();
 
-            if (r.Succeeded) {
-                jQuery(addCopyrightSubmitSuccess).show();
-            }
-            else {
-                jQuery(addCopyrightSubmitFailure).show();
+                if (r.Succeeded) {
+                    jQuery(addCopyrightForm).find("input[type=text],input[type=file]").val("");
+                    jQuery(addCopyrightSubmitSuccess).show();
+                }
+                else {
+                    jQuery(addCopyrightSubmitFailure).text(r.ErrorMessage);
+                    jQuery(addCopyrightSubmitFailure).show();
+                }
             }
         });
     }

@@ -9,6 +9,8 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class AddCopyrightFormModel
     {
+        [Required(ErrorMessage = CopyrightMessages.NameRequired)]
+        public string Name { get; set; }
         [Required(ErrorMessage = CopyrightMessages.FileRequired)]
         public HttpPostedFileBase File { get; set; }
         [Required(ErrorMessage = CopyrightMessages.FileTypeRequired)]

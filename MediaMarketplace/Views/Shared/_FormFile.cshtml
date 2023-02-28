@@ -2,5 +2,5 @@
 @model FormFileViewModel
 <div class="form-row">
     <label for="@Model.CssClass">@Model.LabelText</label>
-    @Html.TextBox("file", "", new { type = "file" })
+    @Html.TextBox(@Model.CssClass, "", new { type = "file" })
 </div>
