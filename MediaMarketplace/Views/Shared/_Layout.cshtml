@@ -52,9 +52,7 @@
         </div>
         @if (thisModel.IsUserLoggedIn)
         {
-            <div class="profile-nav">
-                @Html.Partial("/Views/Account/_ProfileNav.cshtml", thisModel.UserName)
-            </div>
+            @Html.Partial("/Views/Account/_ProfileNav.cshtml", thisModel.UserName)
         }
     </header>
     <div class="content">
