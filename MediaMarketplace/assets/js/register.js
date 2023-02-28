@@ -50,10 +50,12 @@ jQuery(document).ready(function ()
 
             if (r.Succeeded)
             {
+                jQuery(registerForm).find("input[type=text],input[type=password]").val("");
                 jQuery(registerSubmitSuccess).show();
             }
             else
             {
+                jQuery(registerSubmitFailure).text(r.ErrorMessage);
                 jQuery(registerSubmitFailure).show();
             }
         });

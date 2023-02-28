@@ -10,6 +10,7 @@ namespace MediaMarketplace.Models.FormModels
     public class RegisterFormModel
     {
         [Required(ErrorMessage = AccountMessages.EmailRequired)]
+        [EmailAddress(ErrorMessage = AccountMessages.EmailAddress)]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = AccountMessages.PasswordRequired)]
