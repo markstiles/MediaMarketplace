@@ -79,7 +79,7 @@ label { display:inline-block; font-size:12px; vertical-align: middle; width: 125
 .pay-info .delete:hover { background-color: #ffc347; }
 
 /* VIEW COPYRIGHTS */
-.view-copyright h2 { margin-bottom:20px; }
+.view-copyright h2 { margin-bottom:23px; }
 .view-copyright form { vertical-align:top; margin: 5px 5px; display: inline-block; width: 470px; border: 1px solid #236bc5; padding: 5px; height:190px; position:relative; }
 .view-copyright fieldset { margin:0px; }
 .view-copyright fieldset span { font-weight:bold; }
