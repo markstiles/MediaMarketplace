@@ -71,14 +71,20 @@ namespace MediaMarketplace.Controllers
         [CheckLogin]
         public ActionResult SellCopyright()
         {
-            //TODO fill out with all copyrights for this user
+            var user = UserSession.GetUser();
+            var copyrightFiles = DbContext.copyrights.Where(a 
+                => a.copyright_user_id == user.user_id 
+                && a.copyright_active
+                && !a.copyright_sales.Any(b => b.copyright_sale_active))
+                .ToList();
+            var copyrightSales = DbContext.copyright_sales.Where(a
+                => a.copyright_sale_seller_id == user.user_id
+                && a.copyright_sale_active)
+                .ToList();
             var model = new SellCopyrightViewModel
             {
-                CopyrightFiles = new List<ListItem>
-                {
-                    new ListItem { Text="Fix Me", Value="Fix Me" },
-                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
-                }
+                CopyrightFiles = copyrightFiles,
+                CopyrightSales = copyrightSales
             };
 
             return View(model);
@@ -217,6 +223,49 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult SellCopyrightSubmit(SellCopyrightFormModel form)
         {
+            var user = UserSession.GetUser();
+            var copyrightFile = DbContext.copyrights.FirstOrDefault(a
+                => a.copyright_id == form.Id
+                && a.copyright_user_id == user.user_id);
+
+            if (copyrightFile == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The copyright file wasn't found" });
+
+            var cSale = new copyright_sales
+            {
+                copyright_sale_copyright_id = form.Id,
+                copyright_sale_sale_price = form.Amount,
+                copyright_sale_create_date = DateTime.Now,
+                copyright_sale_seller_id = user.user_id,
+                copyright_sale_active = true,
+            };
+            DbContext.copyright_sales.Add(cSale);
+            DbContext.SaveChanges();
+
+            var result = new TransactionResult
+            {
+                Succeeded = true,
+                ErrorMessage = string.Empty
+            };
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        [ValidateForm]
+        public ActionResult DeleteSellCopyrightSubmit(SellCopyrightFormModel form)
+        {
+            var user = UserSession.GetUser();
+            var copyrightSale = DbContext.copyright_sales.FirstOrDefault(a
+                => a.copyright_sale_id == form.Id
+                && a.copyright_sale_seller_id == user.user_id);
+
+            if (copyrightSale == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The copyright sale wasn't found" });
+
+            DbContext.copyright_sales.Remove(copyrightSale);
+            DbContext.SaveChanges();
+
             var result = new TransactionResult
             {
                 Succeeded = true,

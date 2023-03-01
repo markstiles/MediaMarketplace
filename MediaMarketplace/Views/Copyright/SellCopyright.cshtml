@@ -3,25 +3,59 @@
 @model SellCopyrightViewModel
 @{
     ViewBag.Title = "Sell Copyright";
-}
+
+    var copyrightFiles = Model.CopyrightFiles
+        .Select(a => new ListItem { Value = a.copyright_id.ToString(), Text = a.copyright_name })
+        .ToList();
+}   
 
 <div class="content-container sell-copyright-container">
     <div class="site-section sell-copyright">
         <h2>Place Your Copyright for Sale</h2>
-        <form class="form" method="post" action="/Copyright/SellCopyrightSubmit">
-            <fieldset>
-                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "amount", LabelText = "Amount" })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Place Copyright for Sale" })
-            </fieldset>
-        </form>
-        <div class="submit-results">
-            <div class="success buy-license-success">
-                You successfully placed a copyright for sale.
+        @if (copyrightFiles.Count == 0)
+        {
+            <div class="notification">You have no copyrights to sell.</div>
+        }
+        else
+        {
+            <form class="form" method="post" action="/Copyright/SellCopyrightSubmit">
+                <fieldset>
+                    @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-id", LabelText = "Property", ListItems = copyrightFiles })
+                    @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "amount", LabelText = "Amount" })
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Place Copyright for Sale" })
+                </fieldset>
+            </form>
+            <div class="submit-results">
+                <div class="failure sell-copyright-failure">
+                    There was an issue placing a copyright for sale.
+                </div>
             </div>
-            <div class="failure buy-license-failure">
-                There was an issue placing a copyright for sale.
+        }
+    </div>
+    <div class="site-section delete-sell-copyright">
+        <h2>View Your Copyrights for Sale</h2>
+        @if(Model.CopyrightSales.Count == 0)
+        {
+            <div class="notification">You have no copyrights for sale.</div>
+        }
+        @foreach (var s in Model.CopyrightSales)
+        {
+            <form class="form" method="post" action="/Copyright/DeleteSellCopyrightSubmit">
+                <fieldset>
+                    @Html.Partial("/Views/Shared/_FormHidden.cshtml", new FormTextViewModel { CssClass = "copyright-sale-id", LabelText = "Property", FieldValue = s.copyright_sale_id.ToString() })
+                    <div class="copyright-name">@s.copyright.copyright_name&nbsp;-</div>
+                    <div class="copyright-sale-price">$@Math.Round(s.copyright_sale_sale_price, 2)</div>
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Delete Copyright Sale" })
+                </fieldset>
+            </form>
+            <div class="submit-results">
+                <div class="success delete-copyright-sale-success">
+                    You successfully deleted copyright sale.
+                </div>
+                <div class="failure delete-copyright-sale-failure">
+                    There was an issue deleting a copyright sale.
+                </div>
             </div>
-        </div>
+        }
     </div>
 </div>

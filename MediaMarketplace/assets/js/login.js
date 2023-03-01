@@ -43,7 +43,7 @@ jQuery(document).ready(function ()
         });
     }
 
-    /* get radio list
+    /* TODO get radio list
      * 
         var sitesValue = [];
         jQuery(crawlerConfigForm + " .sites input[type=checkbox]").each(function ()

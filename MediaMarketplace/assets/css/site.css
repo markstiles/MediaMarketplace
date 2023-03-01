@@ -1,10 +1,12 @@
 ﻿/* GLOBAL */
-body { width: 1000px; margin: 0px auto; background:#fdfdfd; font-family:Arial, Helvetica, sans-serif; }
+body { width: 1000px; margin: 0px auto; background:url("/assets/img/bg-polygon.jpg"); font-family:Arial, Helvetica, sans-serif; }
 header { margin: 20px 0px; position:relative; }
 .site-name { font-size:45px; font-weight:bold; }
-.site-name a { color: #000; text-decoration:none; cursor:pointer; }
+.site-name a { color: #236bc5; text-decoration: none; cursor: pointer; border: 1px solid #236bc5; border-radius: 10px 0; padding: 3px 10px; background: #fff; }
 h2 { font-size: 20px; margin: 0; background: #ddd; padding: 4px 8px; border-radius: 10px 0 10px 0px; border: 1px solid #236bc5; }
 .content {  }
+.notification { background-color: #236bc5; margin: 10px; border-radius: 10px 0; padding: 10px; color: #fff; font-weight: bold; text-align: center; }
+footer p { color:#fff; }
 
 /* NAVIGATION */
 .navbar { }
@@ -12,7 +14,7 @@ h2 { font-size: 20px; margin: 0; background: #ddd; padding: 4px 8px; border-radi
 .navbar > ul { border-bottom: 3px solid #236bc5; }
 .navbar .topitems > li { display:inline-block; margin:0 5px 0 0; position:relative; text-decoration: none; padding: 6px 20px; background-color: #236bc5; color: #fff; font-weight: bold; border-radius: 10px 0 0px 0; }
 .navbar .topitems > li:hover { background-color: #ffc347; color:#fff; }
-.site-section { border: 1px solid #236bc5; padding: 4px; margin: 0 0 10px 0; position: relative; border-radius: 10px 0px; border-width: 1px; }
+.site-section { background:#fff; border: 1px solid #236bc5; padding: 4px; margin: 0 0 10px 0; position: relative; border-radius: 10px 0px; border-width: 1px; }
 .navbar .topitems > li:hover > .subitems { display:block; }
 .navbar .subitems { display:none; z-index:9; }
 .navbar .subitems { position:absolute; top:30px; left:0; width:196px; }
@@ -96,6 +98,13 @@ label { display:inline-block; font-size:12px; vertical-align: middle; width: 125
 .view-copyright fieldset .button-row .show { display:block; }
 .view-copyright fieldset .button-row .hide { display:none; }
 
+/* SELL COPYRIGHTS */
+.copyright-name { display: inline-block; font-size: 20px; font-weight: bold; margin: 0 3px 0 20px; }
+.copyright-sale-price { display:inline-block; font-weight:bold; font-size:20px; }
+.delete-sell-copyright .button-row { display:inline-block; padding: 0; margin: 0; position: absolute; right: 7px; top: 6px; }
+.delete-sell-copyright fieldset { padding: 0px 5px 5px 5px; border: 1px solid #236bc5; border-radius: 10px 0; margin: 0 5px; position:relative; }
+.delete-sell-copyright h2 { margin-bottom:30px; }
+.delete-sell-copyright form { margin: 0 0 10px; }
 
 @media only screen and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     body { width: auto; margin: 0px 10px; }

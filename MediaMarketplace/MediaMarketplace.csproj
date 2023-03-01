@@ -284,6 +284,7 @@
     <Compile Include="Models\FormModels\BuyLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\ActivateCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\DeletePaymentInfoFormModel.cs" />
+    <Compile Include="Models\FormModels\DeleteSellCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\UpdatePaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\SellLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\SellCopyrightFormModel.cs" />
@@ -333,11 +334,13 @@
     <Content Include="assets\img\home-article-3.jfif" />
     <Content Include="assets\img\home-article-4.jfif" />
     <Content Include="assets\js\accountinfo.js" />
+    <Content Include="assets\js\copyright-sell.js" />
+    <Content Include="assets\js\copyright-add.js" />
     <Content Include="assets\js\payinfo.js" />
     <Content Include="assets\js\register.js" />
     <Content Include="assets\js\login.js" />
     <Content Include="assets\js\global.js" />
-    <Content Include="assets\js\copyright.js" />
+    <Content Include="assets\js\copyright-activation.js" />
     <Content Include="Global.asax" />
     <Content Include="assets\css\site.css" />
     <Content Include="Models\EntityModels\Model1.Context.tt">

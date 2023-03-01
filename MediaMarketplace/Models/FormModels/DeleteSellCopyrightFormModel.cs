@@ -7,11 +7,9 @@ using System.Web;
 
 namespace MediaMarketplace.Models.FormModels
 {
-    public class SellCopyrightFormModel
+    public class DeleteSellCopyrightFormModel
     {
-        [Required(ErrorMessage = CopyrightMessages.IdRequired)]
-        public int Id { get; set; }
-        [Required(ErrorMessage = CopyrightMessages.AmountRequired)]
-        public int Amount { get; set; }
+        [Required(ErrorMessage = CopyrightMessages.SaleIdRequired)]
+        public int SaleId { get; set; }
     }
 }
