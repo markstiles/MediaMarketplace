@@ -9,6 +9,9 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class BuyCopyrightFormModel
     {
-        //[Required(ErrorMessage = ConfigMessages.AzureUrlRequired)]        
+        [Required(ErrorMessage = CopyrightMessages.CopyrightSaleIdRequired)]
+        public int CopyrightSaleId { get; set; }
+        [Required(ErrorMessage = CopyrightMessages.PayInfoIdRequired)]
+        public int PayInfoId { get; set; }
     }
 }

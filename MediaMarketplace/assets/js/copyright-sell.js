@@ -69,7 +69,7 @@ jQuery(document).ready(function ()
         jQuery.post(
             jQuery(formParent).attr("action"),
             {
-                Id: idValue
+                CopyrightSaleId: idValue
             }
         ).done(function (r) {
             jQuery(progressIndicator).hide();

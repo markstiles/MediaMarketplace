@@ -9,7 +9,7 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class DeleteSellCopyrightFormModel
     {
-        [Required(ErrorMessage = CopyrightMessages.SaleIdRequired)]
-        public int SaleId { get; set; }
+        [Required(ErrorMessage = CopyrightMessages.CopyrightSaleIdRequired)]
+        public int CopyrightSaleId { get; set; }
     }
 }

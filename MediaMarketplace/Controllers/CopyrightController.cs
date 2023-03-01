@@ -55,14 +55,20 @@ namespace MediaMarketplace.Controllers
         [CheckLogin]
         public ActionResult BuyCopyright()
         {
-            //TODO fill out with all copyright files to buy
+            var user = UserSession.GetUser();
+            var copyrightSales = DbContext.copyright_sales.Where(a
+                => a.copyright_sale_seller_id != user.user_id
+                && a.copyright_sale_active)
+                .ToList();
+            
+            var payInfos = DbContext.payment_informations
+                .Where(a => a.payment_information_user_id == user.user_id)
+                .ToList();
+
             var model = new BuyCopyrightViewModel
             {
-                CopyrightFiles = new List<ListItem>
-                {
-                    new ListItem { Text="Fix Me", Value="Fix Me" },
-                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
-                }
+                CopyrightSales = copyrightSales,
+                PayInfos = payInfos
             };
 
             return View(model);
@@ -210,10 +216,32 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult BuyCopyrightSubmit(BuyCopyrightFormModel form)
         {
-            var result = new TransactionResult
+            var user = UserSession.GetUser();
+            var copyrightSale = DbContext.copyright_sales.FirstOrDefault(a
+                => a.copyright_sale_id == form.CopyrightSaleId
+                && a.copyright_sale_active);
+
+            if (copyrightSale == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The copyright sale was not found" });
+
+            var payInfo = DbContext.payment_informations
+                .FirstOrDefault(a => a.payment_information_id == form.PayInfoId);
+
+            if (payInfo == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The payment information was not found" });
+
+            //assuming some payment transaction took place
+
+            copyrightSale.copyright.copyright_user_id = user.user_id;
+            copyrightSale.copyright_sale_buyer_id = user.user_id;
+            copyrightSale.copyright_sale_close_date = DateTime.Now;
+            DbContext.SaveChanges();
+
+            var result = new
             {
                 Succeeded = true,
-                ErrorMessage = string.Empty
+                ErrorMessage = string.Empty,
+                RedirectUrl = "/Copyright/ViewCopyrights"
             };
 
             return Json(result);
@@ -253,11 +281,11 @@ namespace MediaMarketplace.Controllers
 
         [HttpPost]
         [ValidateForm]
-        public ActionResult DeleteSellCopyrightSubmit(SellCopyrightFormModel form)
+        public ActionResult DeleteSellCopyrightSubmit(DeleteSellCopyrightFormModel form)
         {
             var user = UserSession.GetUser();
             var copyrightSale = DbContext.copyright_sales.FirstOrDefault(a
-                => a.copyright_sale_id == form.Id
+                => a.copyright_sale_id == form.CopyrightSaleId
                 && a.copyright_sale_seller_id == user.user_id);
 
             if (copyrightSale == null)

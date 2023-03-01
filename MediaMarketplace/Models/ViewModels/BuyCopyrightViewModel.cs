@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaMarketplace.Models.EntityModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace MediaMarketplace.Models.ViewModels
 {
     public class BuyCopyrightViewModel
     {
-        public List<ListItem> CopyrightFiles { get; set; }
+        public List<copyright_sales> CopyrightSales { get; set; }
+        public List<payment_informations> PayInfos { get; set; }
     }
 }

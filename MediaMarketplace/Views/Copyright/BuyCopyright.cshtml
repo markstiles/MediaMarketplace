@@ -3,24 +3,42 @@
 @model BuyCopyrightViewModel
 @{
     ViewBag.Title = "Buy Copyright";
+
+    var copyrightSales = Model.CopyrightSales
+    .Select(a => new ListItem { Value = a.copyright_sale_id.ToString(), Text = a.copyright.copyright_name })
+    .ToList();
+
+    var payInfos = Model.PayInfos
+        .Select(a => new ListItem { 
+            Value = a.payment_information_id.ToString(), 
+            Text = $"Account ending in {a.payment_information_bank_account.Substring(a.payment_information_bank_account.Length - 4)}" })
+        .ToList();
 }
 
 <div class="content-container buy-copyright-container">
     <div class="site-section buy-copyright">
         <h2>Purchase a Copyright</h2>
-        <form class="form" method="post" action="/Copyright/BuyCopyrightSubmit">
-            <fieldset>
-                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-file", LabelText = "Property", ListItems = Model.CopyrightFiles })
-                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Purchase Copyright" })
-            </fieldset>
-        </form>
-        <div class="submit-results">
-            <div class="success buy-copyright-success">
-                You successfully bought a copyright.
+        @if (copyrightSales.Count == 0)
+        {
+            <div class="notification">There are no copyrights to purchase.</div>
+        }
+        else
+        {
+            <form class="form" method="post" action="/Copyright/BuyCopyrightSubmit">
+                <fieldset>
+                    @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-sale-id", LabelText = "Copyright", ListItems = copyrightSales })
+                    @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "pay-info-id", LabelText = "Payment Information", ListItems = payInfos })
+                    @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Purchase Copyright" })
+                </fieldset>
+            </form>
+            <div class="submit-results">
+                <div class="success buy-copyright-success">
+                    You successfully bought a copyright.
+                </div>
+                <div class="failure buy-copyright-failure">
+                    There was an issue buying a copyright.
+                </div>
             </div>
-            <div class="failure buy-copyright-failure">
-                There was an issue buying a copyright.
-            </div>
-        </div>
+        }
     </div>
 </div>

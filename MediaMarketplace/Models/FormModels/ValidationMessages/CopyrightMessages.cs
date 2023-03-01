@@ -12,6 +12,7 @@ namespace MediaMarketplace.Models.FormModels.ValidationMessages
         public const string FileTypeRequired = "You must provide a file type";
         public const string IdRequired = "You must provide a copyright id";
         public const string AmountRequired = "You must provide an amount";
-        public const string SaleIdRequired = "You must provide a copyright sale id";
+        public const string CopyrightSaleIdRequired = "You must provide a copyright sale id";
+        public const string PayInfoIdRequired = "You must provide a payment information id";
     }
 }
