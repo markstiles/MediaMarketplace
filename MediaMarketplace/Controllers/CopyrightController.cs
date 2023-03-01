@@ -96,38 +96,6 @@ namespace MediaMarketplace.Controllers
             return View(model);
         }
 
-        [CheckLogin]
-        public ActionResult AddLicense()
-        {
-            //TODO fill out with all copyrights for this user
-            var model = new AddLicenseViewModel
-            {
-                CopyrightFiles = new List<ListItem>
-                {
-                    new ListItem { Text="Fix Me", Value="Fix Me" },
-                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
-                }
-            };
-
-            return View(model);
-        }
-
-        [CheckLogin]
-        public ActionResult BuyLicense()
-        {
-            //TODO fill out with all copyright files to buy
-            var model = new BuyLicenseViewModel
-            {
-                CopyrightFiles = new List<ListItem>
-                {
-                    new ListItem { Text="Fix Me", Value="Fix Me" },
-                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
-                }
-            };
-
-            return View(model);
-        }
-
         #endregion
 
         #region Post Methods
@@ -140,15 +108,11 @@ namespace MediaMarketplace.Controllers
                 return Json(new { Succeeded = false, ErrorMessage = "file was empty" });
 
             var user = UserSession.GetUser();
-            var userFolder = $"{Request.PhysicalApplicationPath}/uploads/{user.user_id}";
-            if (!Directory.Exists(userFolder))
-                Directory.CreateDirectory(userFolder);  
-
             var randomId = Guid.NewGuid();
             string fileExtension = Path.GetExtension(form.File.FileName);
-            string virtualPath = Server.MapPath($"~/uploads/{user.user_id}/{randomId}{fileExtension}");
+            string virtualPath = Server.MapPath($"~/uploads/{randomId}{fileExtension}");
             form.File.SaveAs(virtualPath);
-            string relativePath = $"/uploads/{user.user_id}/{randomId}{fileExtension}";
+            string relativePath = $"/uploads/{randomId}{fileExtension}";
 
             var copyrightItem = new copyright
             {
@@ -174,7 +138,7 @@ namespace MediaMarketplace.Controllers
         {
             var user = UserSession.GetUser();
             var copyrightFile = DbContext.copyrights.FirstOrDefault(a
-                => a.copyright_id == form.Id
+                => a.copyright_id == form.CopyrightId
                 && a.copyright_user_id == user.user_id);
 
             if (copyrightFile == null)
@@ -196,7 +160,7 @@ namespace MediaMarketplace.Controllers
         {
             var user = UserSession.GetUser();
             var copyrightFile = DbContext.copyrights.FirstOrDefault(a 
-                => a.copyright_id == form.Id 
+                => a.copyright_id == form.CopyrightId
                 && a.copyright_user_id == user.user_id);
 
             if (copyrightFile == null)
@@ -253,7 +217,7 @@ namespace MediaMarketplace.Controllers
         {
             var user = UserSession.GetUser();
             var copyrightFile = DbContext.copyrights.FirstOrDefault(a
-                => a.copyright_id == form.Id
+                => a.copyright_id == form.CopyrightId
                 && a.copyright_user_id == user.user_id);
 
             if (copyrightFile == null)
@@ -261,7 +225,7 @@ namespace MediaMarketplace.Controllers
 
             var cSale = new copyright_sales
             {
-                copyright_sale_copyright_id = form.Id,
+                copyright_sale_copyright_id = form.CopyrightId,
                 copyright_sale_sale_price = form.Amount,
                 copyright_sale_create_date = DateTime.Now,
                 copyright_sale_seller_id = user.user_id,
@@ -294,32 +258,6 @@ namespace MediaMarketplace.Controllers
             DbContext.copyright_sales.Remove(copyrightSale);
             DbContext.SaveChanges();
 
-            var result = new TransactionResult
-            {
-                Succeeded = true,
-                ErrorMessage = string.Empty
-            };
-
-            return Json(result);
-        }
-
-        [HttpPost]
-        [ValidateForm]
-        public ActionResult AddLicenseSubmit(SellLicenseFormModel form)
-        {
-            var result = new TransactionResult
-            {
-                Succeeded = true,
-                ErrorMessage = string.Empty
-            };
-
-            return Json(result);
-        }
-
-        [HttpPost]
-        [ValidateForm]
-        public ActionResult BuyLicenseSubmit(BuyLicenseFormModel form)
-        {
             var result = new TransactionResult
             {
                 Succeeded = true,

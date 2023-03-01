@@ -9,7 +9,7 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class ActivateCopyrightFormModel
     {
-        [Required(ErrorMessage = CopyrightMessages.IdRequired)]
-        public int Id { get; set; }
+        [Required(ErrorMessage = CopyrightMessages.CopyrightIdRequired)]
+        public int CopyrightId { get; set; }
     }
 }

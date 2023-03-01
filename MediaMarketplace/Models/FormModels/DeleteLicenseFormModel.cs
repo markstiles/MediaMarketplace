@@ -7,8 +7,9 @@ using System.Web;
 
 namespace MediaMarketplace.Models.FormModels
 {
-    public class SellLicenseFormModel
+    public class DeleteLicenseFormModel
     {
-        //[Required(ErrorMessage = ConfigMessages.AzureUrlRequired)]        
+        [Required(ErrorMessage = LicenseMessages.LicenseIdRequired)]
+        public int LicenseId { get; set; }
     }
 }

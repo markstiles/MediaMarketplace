@@ -1,0 +1,76 @@
+﻿@using MediaMarketplace.Models.ViewModels
+@using System.Web.UI.WebControls
+@model ManageLicenseViewModel
+@{
+    ViewBag.Title = "Manage Licenses";
+
+    var licenseTypes = new List<ListItem>
+    {
+        new ListItem { Text="master", Value="master" },
+        new ListItem { Text="sync", Value="sync" },
+        new ListItem { Text="performance", Value="performance" },
+        new ListItem { Text="mechanical", Value="mechanical" },
+        new ListItem { Text="broadcast", Value="broadcast" },
+        new ListItem { Text="print", Value="print" },
+        new ListItem { Text="theatrical", Value="theatrical" }
+    };
+
+    var copyrightFiles = Model.CopyrightFiles
+        .Select(a => new ListItem { Value = a.copyright_id.ToString(), Text = a.copyright_name })
+        .ToList();
+}
+
+<div class="content-container add-license-container">
+    <div class="site-section add-license">
+        <h2>Add Licenses to your Copyrights</h2>
+        <form class="form" method="post" action="/License/AddLicenseSubmit">
+            <fieldset>
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "copyright-id", LabelText = "Copyright", ListItems = copyrightFiles })
+                @Html.Partial("/Views/Shared/_FormSelect.cshtml", new FormSelectViewModel { CssClass = "license-type", LabelText = "License Type", ListItems = licenseTypes })
+                @Html.Partial("/Views/Shared/_FormDate.cshtml", new FormDateViewModel { CssClass = "start-date", LabelText = "Start Date", DefaultValue = DateTime.Today.ToString("yyyy-MM-dd") })
+                @Html.Partial("/Views/Shared/_FormDate.cshtml", new FormDateViewModel { CssClass = "end-date", LabelText = "End Date", DefaultValue = DateTime.Today.AddDays(365).ToString("yyyy-MM-dd") })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "license-cost", LabelText = "License Cost" })
+                @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Add License" })
+            </fieldset>
+        </form>
+        <div class="submit-results">
+            <div class="success add-license-success">
+                You successfully added a license.
+            </div>
+            <div class="failure add-license-failure">
+                There was an issue adding a license.
+            </div>
+        </div>
+    </div>
+    <div class="site-section delete-license">
+        <h2>View your Copyright Licenses</h2>
+        @if (Model.LicenseFiles.Count == 0)
+        {
+            <div class="notification">You don't have any copyright licenses.</div>
+        }
+        else
+        {
+            foreach (var l in Model.LicenseFiles)
+            {
+                <form class="form" method="post" action="/License/DeleteLicenseSubmit">
+                    <fieldset>
+                        @Html.Partial("/Views/Shared/_FormHidden.cshtml", new FormTextViewModel { CssClass = "license-id", FieldValue = l.license_id.ToString() })
+                        <div class="copyright-name">@l.copyright.copyright_name</div>
+                        <div class="license-type">License: @l.license_type</div>
+                        <div class="date">Valid: @l.license_start_date.ToString("MMM d, yyyy") - @l.license_end_date.ToString("MMM d, yyyy")</div>
+                        <div class="license-cost">Cost: $@Math.Round(l.license_cost, 2)</div>
+                        @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Delete License" })
+                    </fieldset>
+                </form>
+                <div class="submit-results">
+                    <div class="success delete-license-success">
+                        You successfully deleted a license.
+                    </div>
+                    <div class="failure delete-license-failure">
+                        There was an issue deleting a license.
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

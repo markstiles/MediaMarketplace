@@ -239,6 +239,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LicenseController.cs" />
     <Compile Include="Controllers\CopyrightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\EntityModels\copyright.cs">
@@ -281,12 +282,13 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FormModels\Attributes\CheckLogin.cs" />
+    <Compile Include="Models\FormModels\DeleteLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\BuyLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\ActivateCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\DeletePaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\DeleteSellCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\UpdatePaymentInfoFormModel.cs" />
-    <Compile Include="Models\FormModels\SellLicenseFormModel.cs" />
+    <Compile Include="Models\FormModels\AddLicenseFormModel.cs" />
     <Compile Include="Models\FormModels\SellCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\BuyCopyrightFormModel.cs" />
     <Compile Include="Models\FormModels\AddCopyrightFormModel.cs" />
@@ -296,9 +298,12 @@
     <Compile Include="Models\FormModels\PaymentInfoFormModel.cs" />
     <Compile Include="Models\FormModels\LoginFormModel.cs" />
     <Compile Include="Models\FormModels\RegisterFormModel.cs" />
+    <Compile Include="Models\FormModels\ValidationMessages\LicenseMessages.cs" />
     <Compile Include="Models\FormModels\ValidationMessages\CopyrightMessages.cs" />
     <Compile Include="Models\FormModels\ValidationMessages\AccountMessages.cs" />
+    <Compile Include="Models\FormModels\Validators\ValidDate.cs" />
     <Compile Include="Models\FormModels\Validators\ValidGuid.cs" />
+    <Compile Include="Models\FormModels\Validators\ValidDecimal.cs" />
     <Compile Include="Models\FormModels\Validators\ValidInt.cs" />
     <Compile Include="Models\FormModels\Validators\ValidLong.cs" />
     <Compile Include="Models\FormModels\Validators\ValidLongList.cs" />
@@ -307,6 +312,7 @@
     </Compile>
     <Compile Include="Models\TransactionResult.cs" />
     <Compile Include="Models\ViewModels\FormCheckListViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormDateViewModel.cs" />
     <Compile Include="Models\ViewModels\FormRadioListViewModel.cs" />
     <Compile Include="Models\ViewModels\LayoutViewModel.cs" />
     <Compile Include="Models\ViewModels\FormFileViewModel.cs" />
@@ -315,7 +321,7 @@
     <Compile Include="Models\ViewModels\FormTextViewModel.cs" />
     <Compile Include="Models\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyLicenseViewModel.cs" />
-    <Compile Include="Models\ViewModels\AddLicenseViewModel.cs" />
+    <Compile Include="Models\ViewModels\ManageLicenseViewModel.cs" />
     <Compile Include="Models\ViewModels\ViewCopyrightsViewModel.cs" />
     <Compile Include="Models\ViewModels\SellCopyrightViewModel.cs" />
     <Compile Include="Models\ViewModels\BuyCopyrightViewModel.cs" />
@@ -335,6 +341,7 @@
     <Content Include="assets\img\home-article-4.jfif" />
     <Content Include="assets\js\accountinfo.js" />
     <Content Include="assets\js\copyright-buy.js" />
+    <Content Include="assets\js\license-manage.js" />
     <Content Include="assets\js\copyright-sell.js" />
     <Content Include="assets\js\copyright-add.js" />
     <Content Include="assets\js\payinfo.js" />
@@ -359,9 +366,9 @@
     <Content Include="Views\Account\RegisterLogin.cshtml" />
     <Content Include="Views\Account\UpdateAccountInfo.cshtml" />
     <Content Include="Views\Copyright\AddCopyright.cshtml" />
-    <Content Include="Views\Copyright\AddLicense.cshtml" />
+    <Content Include="Views\License\ManageLicense.cshtml" />
     <Content Include="Views\Copyright\BuyCopyright.cshtml" />
-    <Content Include="Views\Copyright\BuyLicense.cshtml" />
+    <Content Include="Views\License\BuyLicense.cshtml" />
     <Content Include="Views\Copyright\SellCopyright.cshtml" />
     <Content Include="Views\Account\Dashboard.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -395,6 +402,7 @@
     <Content Include="Views\Shared\_FormPassword.cshtml" />
     <Content Include="Views\Copyright\ViewCopyrights.cshtml" />
     <Content Include="Views\Shared\_FormHidden.cshtml" />
+    <Content Include="Views\Shared\_FormDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

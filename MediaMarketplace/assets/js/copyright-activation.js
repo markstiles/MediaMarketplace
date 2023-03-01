@@ -32,14 +32,14 @@ jQuery(document).ready(function ()
 
     function ActivateCopyright(formParent, action, successNode, failureNode, newValue, isReactivate)
     {
-        var idValue = jQuery(formParent).find(".copyright-id").val();
+        var copyrightIdValue = jQuery(formParent).find(".copyright-id").val();
 
         jQuery(progressIndicator).show();
 
         jQuery.post(
             jQuery(formParent).attr(action),
             {
-                Id: idValue
+                CopyrightId: copyrightIdValue
             }
         ).done(function (r) {
             jQuery(progressIndicator).hide();

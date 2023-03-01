@@ -9,9 +9,9 @@ namespace MediaMarketplace.Models.FormModels
 {
     public class SellCopyrightFormModel
     {
-        [Required(ErrorMessage = CopyrightMessages.IdRequired)]
-        public int Id { get; set; }
+        [Required(ErrorMessage = CopyrightMessages.CopyrightIdRequired)]
+        public int CopyrightId { get; set; }
         [Required(ErrorMessage = CopyrightMessages.AmountRequired)]
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace MediaMarketplace
             services.AddTransient<HomeController>();
             services.AddTransient<AccountController>();
             services.AddTransient<CopyrightController>();
+            services.AddTransient<LicenseController>();
 
             //database contexts
             services.AddTransient<MediaMarketplaceEntities>();

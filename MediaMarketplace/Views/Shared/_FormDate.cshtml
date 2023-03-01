@@ -1,0 +1,8 @@
+﻿@model MediaMarketplace.Models.ViewModels.FormDateViewModel
+<div class="form-row">
+    <label for="@Model.CssClass">@Model.LabelText</label>
+    <input type="date" id="@Model.CssClass" class="@Model.CssClass" name="@Model.CssClass" 
+           value="@Model.DefaultValue"
+           min="@Model.MinValue" 
+           max="@Model.MaxValue"/>
+</div>

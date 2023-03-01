@@ -42,14 +42,4 @@ jQuery(document).ready(function ()
             }
         });
     }
-
-    /* TODO get radio list
-     * 
-        var sitesValue = [];
-        jQuery(crawlerConfigForm + " .sites input[type=checkbox]").each(function ()
-        {
-            if (jQuery(this).is(":checked"))
-                sitesValue.push(jQuery(this).val());
-        });
-     * */
 });

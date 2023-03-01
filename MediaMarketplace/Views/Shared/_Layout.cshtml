@@ -25,9 +25,9 @@
                         Account
                         <ul class="subitems">
                             <li>@Html.ActionLink("Dashboard", "Dashboard", "Account")</li>
+                            <li>@Html.ActionLink("Update Account Info", "UpdateAccountInfo", "Account")</li>
                             <li>@Html.ActionLink("View Payment Info", "ViewPaymentInfo", "Account")</li>
                             <li>@Html.ActionLink("Add Payment Info", "AddPaymentInfo", "Account")</li>
-                            <li>@Html.ActionLink("Update Account Info", "UpdateAccountInfo", "Account")</li>
                         </ul>
                     </li>
                     <li>
@@ -37,8 +37,13 @@
                             <li>@Html.ActionLink("View Copyrights", "ViewCopyrights", "Copyright")</li>
                             <li>@Html.ActionLink("Buy Copyright", "BuyCopyright", "Copyright")</li>
                             <li>@Html.ActionLink("Sell Copyright", "SellCopyright", "Copyright")</li>
-                            <li>@Html.ActionLink("Buy License", "BuyLicense", "Copyright")</li>
-                            <li>@Html.ActionLink("Add License", "AddLicense", "Copyright")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Licenses
+                        <ul class="subitems">
+                            <li>@Html.ActionLink("Manage Licenses", "ManageLicense", "License")</li>
+                            <li>@Html.ActionLink("Buy License", "BuyLicense", "License")</li>
                         </ul>
                     </li>
                 }
@@ -72,5 +77,6 @@
     <script src="~/assets/js/copyright-activation.js"></script>
     <script src="~/assets/js/copyright-sell.js"></script>
     <script src="~/assets/js/copyright-buy.js"></script>
+    <script src="~/assets/js/license-manage.js"></script>
 </body>
 </html>

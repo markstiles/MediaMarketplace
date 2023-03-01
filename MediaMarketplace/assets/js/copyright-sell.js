@@ -18,7 +18,7 @@ jQuery(document).ready(function ()
 
     function SellCopyright()
     {
-        var idValue = jQuery(sellCopyrightForm + " .copyright-id").val();
+        var copyrightIdValue = jQuery(sellCopyrightForm + " .copyright-id").val();
         var amountValue = jQuery(sellCopyrightForm + " .amount").val();
 
         jQuery(progressIndicator).show();
@@ -26,7 +26,7 @@ jQuery(document).ready(function ()
         jQuery.post(
             jQuery(sellCopyrightForm).attr("action"),
             {
-                Id: idValue,
+                CopyrightId: copyrightIdValue,
                 Amount: amountValue
             }
         ).done(function (r)
@@ -62,14 +62,14 @@ jQuery(document).ready(function ()
 
     function DeleteSellCopyright(formParent)
     {
-        var idValue = jQuery(formParent).find(".copyright-sale-id").val();
+        var copyrightSaleIdValue = jQuery(formParent).find(".copyright-sale-id").val();
 
         jQuery(progressIndicator).show();
 
         jQuery.post(
             jQuery(formParent).attr("action"),
             {
-                CopyrightSaleId: idValue
+                CopyrightSaleId: copyrightSaleIdValue
             }
         ).done(function (r) {
             jQuery(progressIndicator).hide();
