@@ -126,6 +126,23 @@ label { display:inline-block; font-size:12px; vertical-align: middle; width: 125
 .purchased-licenses .date { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 .purchased-licenses .license-cost { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 
+/* DASHBOARD */
+.dashboard-container h2 { margin-bottom:30px; }
+.dashboard-container .item-wrap { margin: 0 0 10px; }
+.dashboard-container .license-type,
+.dashboard-container .date,
+.dashboard-container .license-cost,
+.dashboard-container .media-name,
+.dashboard-container .media-active,
+.dashboard-container .media-type,
+.dashboard-container .copyright-name,
+.dashboard-container .copyright-sale-price {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
 @media only screen and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     body { width: auto; margin: 0px 10px; }
     header { margin-top:30px; }

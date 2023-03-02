@@ -42,9 +42,21 @@ namespace MediaMarketplace.Controllers
         [CheckLogin]
         public ActionResult Dashboard()
         {
+            var user = UserSession.GetUser();
+            var licensesPurchased = DbContext.license_sales
+                .Where(a => a.license_sale_buyer_id == user.user_id)
+                .ToList();
+            var copyrightSales = DbContext.copyright_sales.Where(a 
+                => a.copyright_sale_buyer_id == user.user_id 
+                || a.copyright_sale_seller_id == user.user_id);
+            var copyrights = DbContext.copyrights.Where(a => a.copyright_user_id == user.user_id).ToList();
+            
             var model = new DashboardViewModel
             {
-
+                LicensesPurchased = licensesPurchased,
+                AllMyCopyrights = copyrights,
+                CopyrightsPurchased = copyrightSales.Where(a => a.copyright_sale_buyer_id == user.user_id).ToList(),
+                CopyrightsSold = copyrightSales.Where(a => a.copyright_sale_seller_id == user.user_id).ToList()
             };
 
             return View(model);
