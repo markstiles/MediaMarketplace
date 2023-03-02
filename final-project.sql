@@ -73,12 +73,12 @@ alter table payment_informations
 
 create table copyrights (
 	copyright_id int identity not null,
+	copyright_user_id int not null,
 	copyright_name varchar(50) not null,
 	copyright_media_type varchar(50) not null,
 	copyright_file varchar(max) not null,
-	copyright_user_id int not null,
 	copyright_active bit not null default 1,
-	constraint pk_copyrights_id primary key (copyright_id)
+	constraint pk_copyrights_id primary key (copyright_id, copyright_user_id)
 )
 alter table copyrights 
 	add constraint fk_copyrights_user_id foreign key (copyright_user_id)
@@ -93,7 +93,7 @@ create table copyright_sales (
 	copyright_sale_close_date datetime,
 	copyright_sale_sale_price money not null,
 	copyright_sale_active bit not null default 1,
-	constraint pk_copyright_sales_id primary key (copyright_sale_id)
+	constraint pk_copyright_sales_id primary key (copyright_sale_id, copyright_sale_copyright_id, copyright_sale_seller_id)
 )
 alter table copyright_sales 
 	add constraint fk_copyright_sales_copyright_id foreign key (copyright_sale_copyright_id)
@@ -112,7 +112,7 @@ create table licenses (
 	license_start_date date not null,
 	license_end_date date not null,
 	license_cost money not null,
-	constraint pk_licenses_id primary key (license_id)
+	constraint pk_licenses_id primary key (license_id, license_copyright_id)
 )
 alter table licenses 
 	add constraint fk_licenses_copyright_id foreign key (license_copyright_id)
@@ -127,7 +127,7 @@ create table license_sales (
 	license_sale_end_date date not null,
 	license_sale_sales_price money not null,
 	license_sale_create_date datetime not null,
-	constraint pk_license_sales_id primary key (license_sale_id)
+	constraint pk_license_sales_id primary key (license_sale_id, license_sale_buyer_id, license_sale_copyright_id)
 )
 alter table license_sales 
 	add constraint fk_license_sales_buyer_id foreign key (license_sale_buyer_id)
