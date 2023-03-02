@@ -40,6 +40,7 @@
           <Property Name="license_sale_start_date" Type="date" Nullable="false" />
           <Property Name="license_sale_end_date" Type="date" Nullable="false" />
           <Property Name="license_sale_sales_price" Type="money" Nullable="false" />
+          <Property Name="license_sale_create_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="licenses">
           <Key>
@@ -311,6 +312,7 @@ warning 6002: The table/view 'MediaMarketplace.dbo.v_copyrights' does not have a
           <Property Name="license_sale_sales_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="copyright" Relationship="Self.fk_license_sales_copyright_id" FromRole="license_sales" ToRole="copyrights" />
           <NavigationProperty Name="user" Relationship="Self.fk_license_sales_buyer_id" FromRole="license_sales" ToRole="users" />
+          <Property Name="license_sale_create_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="license">
           <Key>
@@ -554,6 +556,7 @@ warning 6002: The table/view 'MediaMarketplace.dbo.v_copyrights' does not have a
           <EntitySetMapping Name="license_sales">
             <EntityTypeMapping TypeName="MediaMarketplace.Models.EntityModels.license_sales">
               <MappingFragment StoreEntitySet="license_sales">
+                <ScalarProperty Name="license_sale_create_date" ColumnName="license_sale_create_date" />
                 <ScalarProperty Name="license_sale_id" ColumnName="license_sale_id" />
                 <ScalarProperty Name="license_sale_type" ColumnName="license_sale_type" />
                 <ScalarProperty Name="license_sale_buyer_id" ColumnName="license_sale_buyer_id" />

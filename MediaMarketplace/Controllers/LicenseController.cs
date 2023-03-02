@@ -58,14 +58,19 @@ namespace MediaMarketplace.Controllers
         [CheckLogin]
         public ActionResult BuyLicense()
         {
-            //TODO fill out with all copyright files to buy
+            var user = UserSession.GetUser();
+            var licenseFiles = DbContext.licenses
+                .Where(a => a.copyright.copyright_user_id != user.user_id)
+                .ToList();
+
+            var myLicenses = DbContext.license_sales
+                .Where(a => a.license_sale_buyer_id == user.user_id)
+                .ToList();
+
             var model = new BuyLicenseViewModel
             {
-                CopyrightFiles = new List<ListItem>
-                {
-                    new ListItem { Text="Fix Me", Value="Fix Me" },
-                    new ListItem { Text="Database Lookup", Value="Database Lookup" }
-                }
+                LicenseFiles = licenseFiles,
+                MyLicenseFiles = myLicenses
             };
 
             return View(model);
@@ -112,26 +117,24 @@ namespace MediaMarketplace.Controllers
         [ValidateForm]
         public ActionResult BuyLicenseSubmit(BuyLicenseFormModel form)
         {
-            /* TODO
             var user = UserSession.GetUser();
-            var copyrightFile = DbContext.copyrights.FirstOrDefault(a
-                => a.copyright_id == form.Id
-                && a.copyright_user_id == user.user_id);
+            var licenseFile = DbContext.licenses.FirstOrDefault(a => a.license_id == form.LicenseId);
+            if (licenseFile == null)
+                return Json(new { Succeeded = false, ErrorMessage = "The license file wasn't found" });
 
-            if (copyrightFile == null)
-                return Json(new { Succeeded = false, ErrorMessage = "The copyright file wasn't found" });
-
-            var cSale = new copyright_sales
+            var licenseSale = new license_sales
             {
-                copyright_sale_copyright_id = form.Id,
-                copyright_sale_sale_price = form.Amount,
-                copyright_sale_create_date = DateTime.Now,
-                copyright_sale_seller_id = user.user_id,
-                copyright_sale_active = true,
+                license_sale_buyer_id = user.user_id,
+                license_sale_copyright_id = licenseFile.license_copyright_id,
+                license_sale_end_date = licenseFile.license_end_date,
+                license_sale_start_date = licenseFile.license_start_date,
+                license_sale_sales_price = licenseFile.license_cost,
+                license_sale_type = licenseFile.license_type,
+                license_sale_create_date = DateTime.Now
             };
-            DbContext.copyright_sales.Add(cSale);
+            DbContext.license_sales.Add(licenseSale);
             DbContext.SaveChanges();
-            */
+            
             var result = new TransactionResult
             {
                 Succeeded = true,

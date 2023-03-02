@@ -341,6 +341,7 @@
     <Content Include="assets\img\home-article-4.jfif" />
     <Content Include="assets\js\accountinfo.js" />
     <Content Include="assets\js\copyright-buy.js" />
+    <Content Include="assets\js\license-buy.js" />
     <Content Include="assets\js\license-manage.js" />
     <Content Include="assets\js\copyright-sell.js" />
     <Content Include="assets\js\copyright-add.js" />

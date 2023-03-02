@@ -180,6 +180,8 @@ namespace MediaMarketplace.Controllers
             user.user_phone_number = form.PhoneNumber;
             DbContext.SaveChanges();
 
+            UserSession.StoreUser(user);
+
             var result = new TransactionResult
             {
                 Succeeded = true,

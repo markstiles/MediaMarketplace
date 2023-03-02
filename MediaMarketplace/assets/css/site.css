@@ -107,14 +107,24 @@ label { display:inline-block; font-size:12px; vertical-align: middle; width: 125
 .delete-sell-copyright form { margin: 0 0 10px; }
 
 /* MANAGE LICENSES */
+.delete-license h2 { margin-bottom:30px; }
+.delete-license form { margin: 0 0 10px; }
+.delete-license fieldset { padding: 0px 5px 5px 5px; border: 1px solid #236bc5; border-radius: 10px 0; margin: 0 5px; position:relative; }
 .delete-license .copyright-name { display: inline-block; font-size: 20px; font-weight: bold; margin: 0 3px 0 20px; }
 .delete-license .license-type { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 .delete-license .date { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 .delete-license .license-cost { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 .delete-license .button-row { display:inline-block; padding: 0; margin: 0; position: absolute; right: 7px; top: 6px; }
-.delete-license fieldset { padding: 0px 5px 5px 5px; border: 1px solid #236bc5; border-radius: 10px 0; margin: 0 5px; position:relative; }
-.delete-license h2 { margin-bottom:30px; }
-.delete-license form { margin: 0 0 10px; }
+
+/* BUY LICENSES */
+.view-licenses h2 { margin-bottom:30px; }
+.view-licenses form { margin: 0 0 10px; }
+.view-licenses fieldset { padding: 0px 5px 5px 5px; border: 1px solid #236bc5; border-radius: 10px 0; margin: 0 5px; position:relative; }
+.purchased-licenses { margin:0px 0px 10px 10px; }
+.purchased-licenses .copyright-name { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
+.purchased-licenses .license-type { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
+.purchased-licenses .date { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
+.purchased-licenses .license-cost { display: inline-block; background-color:#ccc; padding: 3px 10px; border-radius: 4px; }
 
 @media only screen and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     body { width: auto; margin: 0px 10px; }

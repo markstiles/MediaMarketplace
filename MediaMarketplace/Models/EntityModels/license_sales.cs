@@ -21,6 +21,7 @@ namespace MediaMarketplace.Models.EntityModels
         public System.DateTime license_sale_start_date { get; set; }
         public System.DateTime license_sale_end_date { get; set; }
         public decimal license_sale_sales_price { get; set; }
+        public System.DateTime license_sale_create_date { get; set; }
     
         public virtual copyright copyright { get; set; }
         public virtual user user { get; set; }
