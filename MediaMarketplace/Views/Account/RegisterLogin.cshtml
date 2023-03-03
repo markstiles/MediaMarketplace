@@ -8,15 +8,15 @@
         <h2>Create an Account</h2>
         <form class="form" method="post" action="/Account/RegisterSubmit">
             <fieldset>
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "email", LabelText = "Email" })
-                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "phone-number", LabelText = "Phone Number" })
-                @Html.Partial("/Views/Shared/_FormPassword.cshtml", new FormTextViewModel { CssClass = "password", LabelText = "Password" })
-                @Html.Partial("/Views/Shared/_FormPassword.cshtml", new FormTextViewModel { CssClass = "password-confirm", LabelText = "Confirm Password" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "first-name", LabelText = "First Name" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "last-name", LabelText = "Last Name" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "business-name", LabelText = "Business Name" })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "email", LabelText = "Email" })
+                @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "phone-number", LabelText = "Phone Number" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "bank-account", LabelText = "Bank Account" })
                 @Html.Partial("/Views/Shared/_FormText.cshtml", new FormTextViewModel { CssClass = "routing-number", LabelText = "Routing Number" })
+                @Html.Partial("/Views/Shared/_FormPassword.cshtml", new FormTextViewModel { CssClass = "password", LabelText = "Password" })
+                @Html.Partial("/Views/Shared/_FormPassword.cshtml", new FormTextViewModel { CssClass = "password-confirm", LabelText = "Confirm Password" })
                 @Html.Partial("/Views/Shared/_FormSubmit.cshtml", new FormSubmitViewModel { ButtonText = "Create User" })
             </fieldset>
         </form>

@@ -7,6 +7,8 @@ go
 
 
 --Down
+drop procedure if exists p_create_user_and_payment_info
+
 drop view if exists v_copyright_sales
 drop view if exists v_copyrights
 
@@ -78,7 +80,7 @@ create table copyrights (
 	copyright_media_type varchar(50) not null,
 	copyright_file varchar(max) not null,
 	copyright_active bit not null default 1,
-	constraint pk_copyrights_id primary key (copyright_id, copyright_user_id)
+	constraint pk_copyrights_id primary key (copyright_id)
 )
 alter table copyrights 
 	add constraint fk_copyrights_user_id foreign key (copyright_user_id)
@@ -166,6 +168,40 @@ select
 	copyright_sale_close_date,
 	copyright_sale_sale_price
 from copyright_sales c where copyright_sale_active = 1
+
+go
+
+create procedure p_create_user_and_payment_info (
+	@user_first_name varchar(100), 
+	@user_last_name varchar(100), 
+	@user_email varchar(100), 
+	@user_business_name varchar(100),
+	@user_password varchar(100), 
+	@user_phone_number varchar(11),
+	@payment_information_bank_account char(12), 
+	@payment_information_routing_number char(9)
+) as 
+begin 
+	begin transaction
+	begin try 
+		
+		insert into users 
+			(user_first_name, user_last_name, user_email, user_business_name, user_password, user_phone_number)
+			values (@user_first_name, @user_last_name, @user_email, @user_business_name, @user_password, @user_phone_number) 
+		if @@rowcount <> 1 throw 50001, 'users: Insert Error',1
+		declare @uid as int = (select user_id from users where user_email = @user_email)
+		if (@uid is NULL) throw 50002, 'users: Query User Error',1
+		insert into payment_informations
+			(payment_information_user_id, payment_information_bank_account, payment_information_routing_number)
+			values (@uid, @payment_information_bank_account, @payment_information_routing_number)
+		if @@rowcount <> 1 throw 50003, 'payment_informations: Insert Error',1		
+		commit
+	end try
+	begin catch
+		rollback ;
+		throw 
+	end catch
+end 
 
 go
 

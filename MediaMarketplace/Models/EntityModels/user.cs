@@ -17,9 +17,9 @@ namespace MediaMarketplace.Models.EntityModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
+            this.copyrights = new HashSet<copyright>();
             this.copyright_sales = new HashSet<copyright_sales>();
             this.copyright_sales1 = new HashSet<copyright_sales>();
-            this.copyrights = new HashSet<copyright>();
             this.license_sales = new HashSet<license_sales>();
             this.payment_informations = new HashSet<payment_informations>();
         }
@@ -33,11 +33,11 @@ namespace MediaMarketplace.Models.EntityModels
         public string user_phone_number { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<copyright> copyrights { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<copyright_sales> copyright_sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<copyright_sales> copyright_sales1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<copyright> copyrights { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<license_sales> license_sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

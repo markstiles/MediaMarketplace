@@ -5,22 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="464a5c6500f3432a9448e05c2f40e47c" Name="Diagram1">
-        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.copyright_sales" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.copyright" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.license_sales" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.license" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.payment_informations" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.user" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_buyer_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_copyright_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_seller_id" ManuallyRouted="false" />
         <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyrights_user_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_license_sales_copyright_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_licenses_copyright_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_license_sales_buyer_id" ManuallyRouted="false" />
-        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_payment_informations_user_id" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.v_copyright_sales" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.v_copyrights" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.copyright_sales" Width="1.5" PointX="5.25" PointY="7.125" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_buyer_id" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_copyright_id" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_copyright_sales_seller_id" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.license_sales" Width="1.5" PointX="8.25" PointY="7.25" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.license" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="MediaMarketplace.Models.EntityModels.payment_informations" Width="1.5" PointX="3" PointY="5" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_license_sales_copyright_id" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_licenses_copyright_id" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_license_sales_buyer_id" />
+        <AssociationConnector Association="MediaMarketplace.Models.EntityModels.fk_payment_informations_user_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

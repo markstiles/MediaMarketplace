@@ -111,25 +111,16 @@ namespace MediaMarketplace.Controllers
             if (form.Password != form.PasswordConfirm)
                 return Json(new { Succeeded = false, ErrorMessage = "The password must match the password confirm" });
 
-            var user = new user
-            {
-                user_first_name = form.FirstName,
-                user_last_name = form.LastName,
-                user_email = form.Email,
-                user_business_name = form.BusinessName,
-                user_password = form.Password,
-                user_phone_number = form.PhoneNumber
-            };
-            user = DbContext.users.Add(user);
-            DbContext.SaveChanges();
+            DbContext.p_create_user_and_payment_info(
+                form.FirstName,
+                form.LastName,
+                form.Email,
+                form.BusinessName,
+                form.Password,
+                form.PhoneNumber,
+                form.BankAccount,
+                form.RoutingNumber);
 
-            var payInfo = new payment_informations
-            {
-                payment_information_user_id = user.user_id,
-                payment_information_bank_account = form.BankAccount,
-                payment_information_routing_number = form.RoutingNumber
-            };
-            DbContext.payment_informations.Add(payInfo);
             DbContext.SaveChanges();
 
             var result = new TransactionResult

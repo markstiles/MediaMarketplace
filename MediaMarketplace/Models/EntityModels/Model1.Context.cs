@@ -12,6 +12,8 @@ namespace MediaMarketplace.Models.EntityModels
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class MediaMarketplaceEntities : DbContext
     {
@@ -25,13 +27,50 @@ namespace MediaMarketplace.Models.EntityModels
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<copyright_sales> copyright_sales { get; set; }
         public virtual DbSet<copyright> copyrights { get; set; }
-        public virtual DbSet<license_sales> license_sales { get; set; }
-        public virtual DbSet<license> licenses { get; set; }
-        public virtual DbSet<payment_informations> payment_informations { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<v_copyright_sales> v_copyright_sales { get; set; }
         public virtual DbSet<v_copyrights> v_copyrights { get; set; }
+        public virtual DbSet<copyright_sales> copyright_sales { get; set; }
+        public virtual DbSet<license_sales> license_sales { get; set; }
+        public virtual DbSet<license> licenses { get; set; }
+        public virtual DbSet<payment_informations> payment_informations { get; set; }
+    
+        public virtual int p_create_user_and_payment_info(string user_first_name, string user_last_name, string user_email, string user_business_name, string user_password, string user_phone_number, string payment_information_bank_account, string payment_information_routing_number)
+        {
+            var user_first_nameParameter = user_first_name != null ?
+                new ObjectParameter("user_first_name", user_first_name) :
+                new ObjectParameter("user_first_name", typeof(string));
+    
+            var user_last_nameParameter = user_last_name != null ?
+                new ObjectParameter("user_last_name", user_last_name) :
+                new ObjectParameter("user_last_name", typeof(string));
+    
+            var user_emailParameter = user_email != null ?
+                new ObjectParameter("user_email", user_email) :
+                new ObjectParameter("user_email", typeof(string));
+    
+            var user_business_nameParameter = user_business_name != null ?
+                new ObjectParameter("user_business_name", user_business_name) :
+                new ObjectParameter("user_business_name", typeof(string));
+    
+            var user_passwordParameter = user_password != null ?
+                new ObjectParameter("user_password", user_password) :
+                new ObjectParameter("user_password", typeof(string));
+    
+            var user_phone_numberParameter = user_phone_number != null ?
+                new ObjectParameter("user_phone_number", user_phone_number) :
+                new ObjectParameter("user_phone_number", typeof(string));
+    
+            var payment_information_bank_accountParameter = payment_information_bank_account != null ?
+                new ObjectParameter("payment_information_bank_account", payment_information_bank_account) :
+                new ObjectParameter("payment_information_bank_account", typeof(string));
+    
+            var payment_information_routing_numberParameter = payment_information_routing_number != null ?
+                new ObjectParameter("payment_information_routing_number", payment_information_routing_number) :
+                new ObjectParameter("payment_information_routing_number", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_create_user_and_payment_info", user_first_nameParameter, user_last_nameParameter, user_emailParameter, user_business_nameParameter, user_passwordParameter, user_phone_numberParameter, payment_information_bank_accountParameter, payment_information_routing_numberParameter);
+        }
     }
 }
